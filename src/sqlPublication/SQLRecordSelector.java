@@ -1,13 +1,15 @@
 /**
  * 
  */
-package application;
+package sqlPublication;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import application.ISQLExecutable;
 
 /**
  * @author misskabu
@@ -18,17 +20,15 @@ public class SQLRecordSelector implements ISQLExecutable {
 	/* (非 Javadoc)
 	 * @see application.ISQLExcutable#excuteQuery()
 	 */
-	String sql;
+	final String SQL = "SELECT * FROM TRADE_LOG";
 	@Override
 	public void executeQuery(Connection con) {
-		// TODO 自動生成されたメソッド・スタブ
+
 		System.out.println("executeQuery");
-		final String SQL = "SELECT * FROM TRADE_LOG";
 		PreparedStatement ps = null;
 		try {
-			ps = con.prepareStatement(SQL);
+			ps = con.prepareStatement(this.SQL);
 		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		ResultSet rs = null;

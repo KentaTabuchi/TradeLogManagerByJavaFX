@@ -2,7 +2,8 @@ package test;
 
 import application.ISQLExecutable;
 import application.MySQLConnector;
-import application.SQLRecordSelector;
+import sqlPublication.SQLRecordSelector;
+
 
 public class Tester {
 	   
