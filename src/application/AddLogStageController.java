@@ -1,8 +1,5 @@
 package application;
 
-import java.time.ZoneId;
-import java.util.Date;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -18,9 +15,8 @@ public class AddLogStageController {
 	@FXML TextField sellingPriceText;
 	@FXML TextField sellingNumText;
 	
-	@FXML
 	//ここにテキストボックスに入力されたデータを吸い上げてデータベースに書き込む処理を書く
-	protected void onAddButtonClick(ActionEvent evt){
+	@FXML protected void onAddButtonClick(ActionEvent evt){
 	
 		System.out.println("AddButton was Clicked from AddLogStage");
 		System.out.println(this.idText.getText());

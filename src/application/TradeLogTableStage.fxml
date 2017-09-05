@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TradeLogTableStageController">
+   <center>
+      <TableView id="tradeLogTable" prefHeight="403.0" prefWidth="683.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="41.0" text="ID" />
+          <TableColumn prefWidth="70.0" text="CODE" />
+            <TableColumn prefWidth="132.0" text="BOOK NAME" />
+            <TableColumn prefWidth="103.0" text="DATE" />
+            <TableColumn prefWidth="126.0" text="PURCHASE PRICE" />
+            <TableColumn prefWidth="50.0" text="NUM" />
+            <TableColumn prefWidth="101.0" text="SELLING PRICE" />
+            <TableColumn minWidth="0.0" prefWidth="55.0" text="NUM" />
+        </columns>
+      </TableView>
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="View">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onShowAddLogWindowMenuClick" text="Show AddLog Window" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>
