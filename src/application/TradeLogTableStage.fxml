@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -7,18 +10,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TradeLogTableStageController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TradeLogTableStageController">
    <center>
-      <TableView id="tradeLogTable" prefHeight="403.0" prefWidth="683.0" BorderPane.alignment="CENTER">
+      <TableView id="tradeLogTable" fx:id="tableView" prefHeight="403.0" prefWidth="683.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="41.0" text="ID" />
-          <TableColumn prefWidth="70.0" text="CODE" />
-            <TableColumn prefWidth="132.0" text="BOOK NAME" />
-            <TableColumn prefWidth="103.0" text="DATE" />
-            <TableColumn prefWidth="126.0" text="PURCHASE PRICE" />
-            <TableColumn prefWidth="50.0" text="NUM" />
-            <TableColumn prefWidth="101.0" text="SELLING PRICE" />
-            <TableColumn minWidth="0.0" prefWidth="55.0" text="NUM" />
+          <TableColumn fx:id="idColumn" prefWidth="41.0" text="ID" />
+          <TableColumn fx:id="codeColumn" prefWidth="70.0" text="CODE" />
+            <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
+            <TableColumn fx:id="dateColumn" prefWidth="103.0" text="DATE" />
+            <TableColumn fx:id="purchasePriceColumn" prefWidth="126.0" text="PURCHASE PRICE" />
+            <TableColumn fx:id="purchaseNumColumn" prefWidth="50.0" text="NUM" />
+            <TableColumn fx:id="sellingPriceColumn" prefWidth="101.0" text="SELLING PRICE" />
+            <TableColumn fx:id="sellingNumColumn" minWidth="0.0" prefWidth="55.0" text="NUM" />
         </columns>
       </TableView>
    </center>
@@ -35,6 +38,11 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Table">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onReloadLogsClick" text="Reload Logs" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="View">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onShowAddLogWindowMenuClick" text="Show AddLog Window" />

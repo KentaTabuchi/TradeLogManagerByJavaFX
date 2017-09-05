@@ -2,7 +2,7 @@ package test;
 
 import application.ISQLExecutable;
 import application.MySQLConnector;
-import sqlPublication.SQLRecordSelector;
+import sqlPublication.SQLReadAllTradeLog;
 
 
 public class Tester {
@@ -13,7 +13,7 @@ public class Tester {
 		 */
 		@SuppressWarnings("unused")
 		public static void main(String[] args) {
-			ISQLExecutable sqlExecutable= new SQLRecordSelector();
+			ISQLExecutable sqlExecutable= new SQLReadAllTradeLog();
 	    	MySQLConnector mysqlConnector = new MySQLConnector(sqlExecutable);
 	    }
 }
