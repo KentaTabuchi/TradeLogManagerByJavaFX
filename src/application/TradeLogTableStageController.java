@@ -65,7 +65,9 @@ public class TradeLogTableStageController implements Initializable{
 		SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
     	@SuppressWarnings("unused")
 		MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllTradeLog);
-    	
+    	for ( int i = 0; i<tableView.getItems().size(); i++) {
+    	    tableView.getItems().clear();
+    	}
 		sqlReadAllTradeLog.recordList.forEach(e->{
 			this.tableView.getItems().add(new TradeLogRecord(
 					e.idProperty().get(),e.dateProperty().get(),e.codeProperty().get(),e.nameProperty().get(),e.purchasePriceProperty().get(),e.purchaseNumProperty().get(), e.sellingPriceProperty().get(), e.sellingNumProperty().get()));
