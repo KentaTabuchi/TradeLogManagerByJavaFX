@@ -51,6 +51,10 @@ public class TradeLogTableStageController implements Initializable{
 		System.out.println("starting onShowAddBookInfoWindowMenuClick was successed.");
 		this.createBoderPaneStage("AddBookInfoStage.fxml",350,0, 400, 170);
 	}
+	@FXML protected void onShowBookInfoTableWindowMenuClick(ActionEvent evt){
+		System.out.println("starting onShowBookInfoTableWindowMenuClick was successed.");
+		this.createBoderPaneStage("BookInfoTableStage.fxml",100,100, 400, 500);
+	}
 	/**
 	 * @param fxmlFileName
 	 * @param posX  this is not absolute number,Input relative position from first Stage. 
@@ -105,8 +109,6 @@ public class TradeLogTableStageController implements Initializable{
 			sqlReadAllTradeLog.recordList.forEach(e->{
 				this.tableView.getItems().add(new TradeLogRecord(
 						e.idProperty().get(),e.dateProperty().get(),e.codeProperty().get(),e.nameProperty().get(),e.purchasePriceProperty().get(),e.purchaseNumProperty().get(), e.sellingPriceProperty().get(), e.sellingNumProperty().get()));
-				
 			});
-		
 	  }
 }
