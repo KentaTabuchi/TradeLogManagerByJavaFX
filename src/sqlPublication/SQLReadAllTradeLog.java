@@ -47,13 +47,23 @@ public class SQLReadAllTradeLog implements ISQLExecutable {
 					Date date=rs.getDate("TRADE_DATE");
 					Integer code=rs.getInt("SECURITIES_CODE");
 					String name=rs.getString("BOOK_NAME");
+					String marcket = rs.getString("MARCKET");
 					Integer purchasePrice=rs.getInt("PURCHASE_PRICE");
 					Integer purchaseNum=rs.getInt("PURCHASE_NUMBER");
 					Integer sellingPrice=rs.getInt("SELLING_PRICE");
 					Integer sellingNum=rs.getInt("SELLING_NUMBER");
 					System.out.println(id+date.toString()+code+name+purchasePrice+purchaseNum+sellingPrice+sellingNum);
 
-					TradeLogRecord record = new TradeLogRecord(id,date.toString(),code,name,purchasePrice,purchaseNum,sellingPrice,sellingNum);
+					TradeLogRecord record = new TradeLogRecord(
+							id,
+							date.toString(),
+							code,
+							name,
+							marcket,
+							purchasePrice,
+							purchaseNum,
+							sellingPrice,
+							sellingNum);
 					recordList.add(record);
 				}
 			} catch (SQLException e) {

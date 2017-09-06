@@ -35,6 +35,8 @@ public class TradeLogTableStageController implements Initializable{
     @SuppressWarnings("rawtypes")
 	@FXML private TableColumn bookNameColumn;
     @SuppressWarnings("rawtypes")
+ 	@FXML private TableColumn marcketColumn;
+    @SuppressWarnings("rawtypes")
 	@FXML private TableColumn purchasePriceColumn;
     @SuppressWarnings("rawtypes")
 	@FXML private TableColumn purchaseNumColumn;
@@ -92,6 +94,7 @@ public class TradeLogTableStageController implements Initializable{
 	        dateColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("date"));
 	        codeColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("code"));
 	        bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("name"));
+	        marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
 	        purchasePriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchasePrice"));
 	        purchaseNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchaseNum"));
 	        sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
@@ -108,7 +111,15 @@ public class TradeLogTableStageController implements Initializable{
 	    	}
 			sqlReadAllTradeLog.recordList.forEach(e->{
 				this.tableView.getItems().add(new TradeLogRecord(
-						e.idProperty().get(),e.dateProperty().get(),e.codeProperty().get(),e.nameProperty().get(),e.purchasePriceProperty().get(),e.purchaseNumProperty().get(), e.sellingPriceProperty().get(), e.sellingNumProperty().get()));
+						e.idProperty().get(),
+						e.dateProperty().get(),
+						e.codeProperty().get(),
+						e.nameProperty().get(),
+						e.marcketProperty().get(),
+						e.purchasePriceProperty().get(),
+						e.purchaseNumProperty().get(), 
+						e.sellingPriceProperty().get(), 
+						e.sellingNumProperty().get()));
 			});
 	  }
 }

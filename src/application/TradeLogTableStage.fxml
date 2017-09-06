@@ -17,7 +17,8 @@
           <TableColumn fx:id="idColumn" prefWidth="41.0" text="ID" />
           <TableColumn fx:id="codeColumn" prefWidth="70.0" text="CODE" />
             <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
-            <TableColumn fx:id="dateColumn" prefWidth="103.0" text="DATE" />
+            <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
+            <TableColumn fx:id="dateColumn" prefWidth="101.0" text="DATE" />
             <TableColumn fx:id="purchasePriceColumn" prefWidth="126.0" text="PURCHASE PRICE" />
             <TableColumn fx:id="purchaseNumColumn" prefWidth="50.0" text="NUM" />
             <TableColumn fx:id="sellingPriceColumn" prefWidth="101.0" text="SELLING PRICE" />
