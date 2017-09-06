@@ -34,6 +34,5 @@ public class AddLogStageController {
 									Integer.parseInt(this.sellingNumText.getText()));
     	@SuppressWarnings("unused")
 		MySQLConnector mysqlConnector = new MySQLConnector(sqlExecutable);
-		
 	}
 }

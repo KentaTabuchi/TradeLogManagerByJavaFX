@@ -45,6 +45,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="View">
               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onShowAddBookInfoWindowMenuClick" text="Show Add BookInfo Window" />
                 <MenuItem mnemonicParsing="false" onAction="#onShowAddLogWindowMenuClick" text="Show AddLog Window" />
               </items>
             </Menu>

@@ -45,35 +45,39 @@ public class TradeLogTableStageController implements Initializable{
     
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddLogWindowMenuClick was successed.");
-		Stage addLogStage = new Stage();
+		this.createBoderPaneStage("AddLogStage.fxml",350,0, 400, 400);
+	}
+	@FXML protected void onShowAddBookInfoWindowMenuClick(ActionEvent evt){
+		System.out.println("starting onShowAddBookInfoWindowMenuClick was successed.");
+		this.createBoderPaneStage("AddBookInfoStage.fxml",350,0, 400, 170);
+	}
+	/**
+	 * @param fxmlFileName
+	 * @param posX  this is not absolute number,Input relative position from first Stage. 
+	 * @param posY
+	 * @param width
+	 * @param height
+	 * 
+	 */
+	private void createBoderPaneStage(String fxmlFileName,int posX,int posY,int width,int height){
+		Stage stage = new Stage();
 		BorderPane root;
 		try {
-			root = (BorderPane)FXMLLoader.load(getClass().getResource("AddLogStage.fxml"));
-			Scene scene = new Scene(root,400,400);
+			root = (BorderPane)FXMLLoader.load(getClass().getResource(fxmlFileName));
+			Scene scene = new Scene(root,width,height);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			addLogStage.setScene(scene);
-			addLogStage.show();
-			addLogStage.setX(addLogStage.getX()+400);
+			stage.setScene(scene);
+			stage.show();
+			stage.setX(stage.getX()+posX);
+			stage.setY(stage.getY()+posY);
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
 	}
 	@FXML protected void onReloadLogsClick(ActionEvent evt){
 		System.out.println("starting onReloadLogs Menu Click was successed.");
-		SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
-    	@SuppressWarnings("unused")
-		MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllTradeLog);
-    	for ( int i = 0; i<tableView.getItems().size(); i++) {
-    	    tableView.getItems().clear();
-    	}
-		sqlReadAllTradeLog.recordList.forEach(e->{
-			this.tableView.getItems().add(new TradeLogRecord(
-					e.idProperty().get(),e.dateProperty().get(),e.codeProperty().get(),e.nameProperty().get(),e.purchasePriceProperty().get(),e.purchaseNumProperty().get(), e.sellingPriceProperty().get(), e.sellingNumProperty().get()));
-			
-		});
-	
+		this.printRecord();
 	}
 	  @SuppressWarnings("unchecked")
 	@Override
@@ -89,6 +93,20 @@ public class TradeLogTableStageController implements Initializable{
 	        sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
 	        sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
 	       
-
+	        this.printRecord();
 	    }
+	  private void printRecord(){
+			SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
+	    	@SuppressWarnings("unused")
+			MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllTradeLog);
+	    	for ( int i = 0; i<tableView.getItems().size(); i++) {
+	    	    tableView.getItems().clear();
+	    	}
+			sqlReadAllTradeLog.recordList.forEach(e->{
+				this.tableView.getItems().add(new TradeLogRecord(
+						e.idProperty().get(),e.dateProperty().get(),e.codeProperty().get(),e.nameProperty().get(),e.purchasePriceProperty().get(),e.purchaseNumProperty().get(), e.sellingPriceProperty().get(), e.sellingNumProperty().get()));
+				
+			});
+		
+	  }
 }
