@@ -55,4 +55,8 @@ public class TradeLogRecord {
 	public IntegerProperty sellingNumProperty(){
 		return sellingNum;
 	}
+	
+	public void setPurchasePriceProperty(int purchasePrice){
+		this.purchasePrice = new SimpleIntegerProperty(purchasePrice);
+	}
 }

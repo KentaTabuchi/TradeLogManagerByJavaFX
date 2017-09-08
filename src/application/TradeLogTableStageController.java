@@ -7,16 +7,21 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import sqlPublication.SQLReadAllTradeLog;
 import sqlPublication.TradeLogRecord;
 
@@ -100,8 +105,34 @@ public class TradeLogTableStageController implements Initializable{
 	        sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
 	        sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
 	       
+	        //setCellFactory Method make a column Editable. 
+	        purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+	        purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+	        sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+	        sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+	        
 	        this.printRecord();
 	    }
+	  
+	  /**
+	 * @param event CellEditEvent have informations where was edited from,what text was inputed.
+	 * tableView.getItems means all recored.
+	 * ObservableList<TradeLogRecord> means all record.
+	 */
+	@FXML protected void onPurchasePriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
+		  System.out.println("onPurchasePriceColumnCommit Start");
+		  int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
+		  event.getRowValue().setPurchasePriceProperty(event.getNewValue());
+		  ObservableList<TradeLogRecord> recordList = tableView.getItems();
+		  TradeLogRecord record = recordList.get(indexRow);
+
+		  System.out.println("Selected Row =" + indexRow);
+		  System.out.println(record.idProperty());
+		  System.out.println(record.dateProperty());
+		  System.out.println(record.nameProperty());
+		  System.out.println(record.purchasePriceProperty());
+	  }
+
 	  private void printRecord(){
 			SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
 	    	@SuppressWarnings("unused")

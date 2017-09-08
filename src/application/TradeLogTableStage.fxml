@@ -12,14 +12,14 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TradeLogTableStageController">
    <center>
-      <TableView id="tradeLogTable" fx:id="tableView" prefHeight="403.0" prefWidth="683.0" BorderPane.alignment="CENTER">
+      <TableView id="tradeLogTable" fx:id="tableView" editable="true" prefHeight="403.0" prefWidth="683.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="41.0" text="ID" />
           <TableColumn fx:id="codeColumn" prefWidth="70.0" text="CODE" />
             <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
             <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
             <TableColumn fx:id="dateColumn" prefWidth="101.0" text="DATE" />
-            <TableColumn fx:id="purchasePriceColumn" prefWidth="126.0" text="PURCHASE PRICE" />
+            <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="126.0" text="PURCHASE PRICE" />
             <TableColumn fx:id="purchaseNumColumn" prefWidth="50.0" text="NUM" />
             <TableColumn fx:id="sellingPriceColumn" prefWidth="101.0" text="SELLING PRICE" />
             <TableColumn fx:id="sellingNumColumn" minWidth="0.0" prefWidth="55.0" text="NUM" />
