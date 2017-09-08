@@ -9,9 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sqlPublication.BookInfoRecord;
+import propertyBeans.BookInfoRecord;
+import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLReadAllBookInfo;
-import sqlPublication.TradeLogRecord;
 
 public class BookInfoTableStageController implements Initializable {
     @FXML private TableView<BookInfoRecord> tableView;

@@ -1,4 +1,4 @@
-package sqlPublication;
+package propertyBeans;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

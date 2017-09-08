@@ -5,6 +5,7 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -15,15 +16,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLReadAllTradeLog;
-import sqlPublication.TradeLogRecord;
+import sqlPublication.SQLUpdateTradeLog;
 
 /**
  * @author misskabu
@@ -106,6 +107,8 @@ public class TradeLogTableStageController implements Initializable{
 	        sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
 	       
 	        //setCellFactory Method make a column Editable. 
+	        dateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+	        codeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 	        purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 	        purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 	        sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -119,10 +122,42 @@ public class TradeLogTableStageController implements Initializable{
 	 * tableView.getItems means all recored.
 	 * ObservableList<TradeLogRecord> means all record.
 	 */
+	@FXML protected void onTradeDateColumnCommit(CellEditEvent<TradeLogRecord,String> event){
+			  System.out.println("onTradeDateColumnCommit Start");
+			  event.getRowValue().setDateProperty(Date.valueOf(event.getNewValue()));
+			  this.updateRecord();
+		  }
+	@FXML protected void onSecuritiesCodeColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
+			  System.out.println("onSecuritiesCodeColumnCommit Start");
+			  event.getRowValue().setCodeProperty(event.getNewValue());
+			  
+			  this.updateRecord();
+		  }
 	@FXML protected void onPurchasePriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
 		  System.out.println("onPurchasePriceColumnCommit Start");
-		  int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
 		  event.getRowValue().setPurchasePriceProperty(event.getNewValue());
+		  this.updateRecord();
+	  }
+	@FXML protected void onPurchaseNumberColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
+		  System.out.println("onPurchaseNumberColumnCommit Start");
+		  event.getRowValue().setPurchaseNumberProperty(event.getNewValue());
+		  this.updateRecord();
+	  }
+	@FXML protected void onSellingPriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
+		  System.out.println("onSellingPriceColumnCommit Start");
+		  event.getRowValue().setSellinPriceProperty(event.getNewValue());
+		  this.updateRecord();
+	  }
+	@FXML protected void onSellingNumberColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
+		  System.out.println("onSellingNumberColumnCommit Start");
+		  event.getRowValue().setSellingNumberProperty(event.getNewValue());
+		  this.updateRecord();
+	  }
+
+		
+	private void updateRecord(){
+		  int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
+		  
 		  ObservableList<TradeLogRecord> recordList = tableView.getItems();
 		  TradeLogRecord record = recordList.get(indexRow);
 
@@ -131,7 +166,18 @@ public class TradeLogTableStageController implements Initializable{
 		  System.out.println(record.dateProperty());
 		  System.out.println(record.nameProperty());
 		  System.out.println(record.purchasePriceProperty());
-	  }
+		  
+		  ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
+				  record.idProperty().intValue(),
+				  Date.valueOf(record.dateProperty().getValue()), 
+				  record.codeProperty().intValue(),
+				  record.purchasePriceProperty().intValue(),
+				  record.purchaseNumProperty().intValue(),
+				  record.sellingPriceProperty().intValue(),
+				  record.sellingNumProperty().intValue());
+		  @SuppressWarnings("unused")
+		MySQLConnector mySQLConnector = new MySQLConnector(sqlUpdateTradeLog);		
+	}
 
 	  private void printRecord(){
 			SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();

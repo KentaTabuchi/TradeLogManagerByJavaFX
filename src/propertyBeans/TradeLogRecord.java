@@ -1,4 +1,6 @@
-package sqlPublication;
+package propertyBeans;
+
+import java.util.Date;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -55,8 +57,25 @@ public class TradeLogRecord {
 	public IntegerProperty sellingNumProperty(){
 		return sellingNum;
 	}
-	
+	public void setIdProperty(int id){
+		this.id = new SimpleIntegerProperty(id);
+	}
+	public void setDateProperty(Date date){
+		this.date = new SimpleStringProperty(date.toString());
+	}
+	public void setCodeProperty(int code){
+		this.code = new SimpleIntegerProperty(code);
+	}
 	public void setPurchasePriceProperty(int purchasePrice){
 		this.purchasePrice = new SimpleIntegerProperty(purchasePrice);
+	}
+	public void setPurchaseNumberProperty(int purchaseNumber){
+		this.purchaseNum = new SimpleIntegerProperty(purchaseNumber);
+	}
+	public void setSellinPriceProperty(int sellingPrice){
+		this.sellingPrice = new SimpleIntegerProperty(sellingPrice);
+	}
+	public void setSellingNumberProperty(int sellingNumber){
+		this.sellingNum = new SimpleIntegerProperty(sellingNumber);
 	}
 }

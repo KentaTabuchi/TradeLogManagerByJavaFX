@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.ISQLExecutable;
+import propertyBeans.TradeLogRecord;
 
 /**
  * @author misskabu

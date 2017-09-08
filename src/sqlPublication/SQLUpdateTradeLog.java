@@ -6,15 +6,13 @@ package sqlPublication;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import javax.swing.JOptionPane;
-
 import application.ISQLExecutable;
 
 /**
  * @author misskabu
  * テキストボックスから集めたデータをtradeLogテーブルに書き込む
  */
-public class SQLAddTradeLog implements ISQLExecutable {
+public class SQLUpdateTradeLog implements ISQLExecutable {
 
 	/* (非 Javadoc)
 	 * @see application.ISQLExcutable#excuteQuery()
@@ -27,17 +25,17 @@ public class SQLAddTradeLog implements ISQLExecutable {
 	private int sellingPrice;
 	private int sellingNumber;
 	
-	final String SQL = "INSERT INTO TRADE_LOG ("
-			+ "ID,"//1
-			+ "TRADE_DATE,"//2
-			+ "SECURITIES_CODE,"//3
-			+ "PURCHASE_PRICE,"//4
-			+ "PURCHASE_NUMBER,"//5
-			+ "SELLING_PRICE,"//6
-			+ "SELLING_NUMBER"//7
-			+ ") VALUES(?,?,?,?,?,?,?)";
+	final String SQL = "UPDATE TRADE_LOG SET "
+			+ "TRADE_DATE = ?,"			//1
+			+ "SECURITIES_CODE = ?,"  	//2
+			+ "PURCHASE_PRICE = ?,"		//3
+			+ "PURCHASE_NUMBER = ?,"		//4
+			+ "SELLING_PRICE = ?,"		//5
+			+ "SELLING_NUMBER = ? "			//6
+			+ "WHERE ID = ?";			//7
+
 	
-	public SQLAddTradeLog(
+	public SQLUpdateTradeLog(
 			int id,
 			Date tradeDate,
 			int securitiedCode,
@@ -56,20 +54,21 @@ public class SQLAddTradeLog implements ISQLExecutable {
 	}
 	@Override
 	public void executeQuery(Connection con) {
+		System.out.println(this.SQL);
 			try(PreparedStatement ps = con.prepareStatement(this.SQL)){
-			ps.setInt(1,this.id);
-			ps.setDate(2,this.tradeDate);
-			ps.setInt(3,this.securitiedCode);
-			ps.setInt(4, this.purchasePrice);
-			ps.setInt(5, this.purchaseNumber);
-			ps.setInt(6, this.sellingPrice);
-			ps.setInt(7, this.sellingNumber);
+			ps.setDate(1,this.tradeDate);
+			ps.setInt(2,this.securitiedCode);
+			ps.setInt(3, this.purchasePrice);
+			ps.setInt(4, this.purchaseNumber);
+			ps.setInt(5, this.sellingPrice);
+			ps.setInt(6, this.sellingNumber);
+			ps.setInt(7, this.id);
 			int result = ps.executeUpdate();
 				if(result!=0){
-					System.out.println(result + "件のレコード書き込みに成功しました");
+					System.out.println(result + "update sucessed.");
 				}
 				else{
-					System.out.println("書き込みに失敗しました");
+					System.out.println("Updating is failed.");
 				}
 			} catch (Exception e) {
 			System.out.println("SQL failed.Please check SQL syntax or exiting Table,columnse");
