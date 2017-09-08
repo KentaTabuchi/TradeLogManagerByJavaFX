@@ -14,6 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -31,26 +34,26 @@ import sqlPublication.SQLUpdateTradeLog;
  *
  */
 public class TradeLogTableStageController implements Initializable{
-    @FXML private TableView<TradeLogRecord> tableView;
-    @SuppressWarnings("rawtypes")
+	@FXML private TableView<TradeLogRecord> tableView;
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn idColumn;
-    @SuppressWarnings("rawtypes")
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn dateColumn;
-    @SuppressWarnings("rawtypes")
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn codeColumn;
-    @SuppressWarnings("rawtypes")
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn bookNameColumn;
-    @SuppressWarnings("rawtypes")
- 	@FXML private TableColumn marcketColumn;
-    @SuppressWarnings("rawtypes")
+	@SuppressWarnings("rawtypes")
+	@FXML private TableColumn marcketColumn;
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn purchasePriceColumn;
-    @SuppressWarnings("rawtypes")
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn purchaseNumColumn;
-    @SuppressWarnings("rawtypes")
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn sellingPriceColumn;
-    @SuppressWarnings("rawtypes")
+	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn sellingNumColumn;
-    
+
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddLogWindowMenuClick was successed.");
 		this.createBoderPaneStage("AddLogStage.fxml",350,0, 400, 400);
@@ -91,112 +94,118 @@ public class TradeLogTableStageController implements Initializable{
 		System.out.println("starting onReloadLogs Menu Click was successed.");
 		this.printRecord();
 	}
-	  @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@Override
-	    public void initialize(URL url, ResourceBundle rb) {
-		  //引数の"id","date"などの文字列がPropertyBeansクラスのTradeLogRecordのprivate変数名と完全一致させると
-		  //TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
-	        idColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("id"));
-	        dateColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("date"));
-	        codeColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("code"));
-	        bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("name"));
-	        marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
-	        purchasePriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchasePrice"));
-	        purchaseNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchaseNum"));
-	        sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
-	        sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
-	       
-	        //setCellFactory Method make a column Editable. 
-	        dateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-	        codeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-	        purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-	        purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-	        sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-	        sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-	        
-	        this.printRecord();
-	    }
-	  
-	  /**
+	public void initialize(URL url, ResourceBundle rb) {
+		//引数の"id","date"などの文字列がPropertyBeansクラスのTradeLogRecordのprivate変数名と完全一致させると
+		//TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
+		idColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("id"));
+		dateColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("date"));
+		codeColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("code"));
+		bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("name"));
+		marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
+		purchasePriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchasePrice"));
+		purchaseNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchaseNum"));
+		sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
+		sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
+
+		//setCellFactory Method make a column Editable. 
+		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		codeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
+		this.printRecord();
+	}
+
+	/**
 	 * @param event CellEditEvent have informations where was edited from,what text was inputed.
 	 * tableView.getItems means all recored.
 	 * ObservableList<TradeLogRecord> means all record.
 	 */
 	@FXML protected void onTradeDateColumnCommit(CellEditEvent<TradeLogRecord,String> event){
-			  System.out.println("onTradeDateColumnCommit Start");
-			  event.getRowValue().setDateProperty(Date.valueOf(event.getNewValue()));
-			  this.updateRecord();
-		  }
+		System.out.println("onTradeDateColumnCommit Start");
+
+		try{event.getRowValue().setDateProperty(Date.valueOf(event.getNewValue()));}
+		catch(IllegalArgumentException e){
+			System.out.println("Input failed.Please input correct Date");
+			Alert alert = new Alert(AlertType.ERROR,"Please input correct Date",ButtonType.OK);
+			alert.show();
+		}
+		this.updateRecord();
+	}
 	@FXML protected void onSecuritiesCodeColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
-			  System.out.println("onSecuritiesCodeColumnCommit Start");
-			  event.getRowValue().setCodeProperty(event.getNewValue());
-			  
-			  this.updateRecord();
-		  }
+		System.out.println("onSecuritiesCodeColumnCommit Start");
+		event.getRowValue().setCodeProperty(event.getNewValue());
+
+		this.updateRecord();
+	}
 	@FXML protected void onPurchasePriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
-		  System.out.println("onPurchasePriceColumnCommit Start");
-		  event.getRowValue().setPurchasePriceProperty(event.getNewValue());
-		  this.updateRecord();
-	  }
+		System.out.println("onPurchasePriceColumnCommit Start");
+		event.getRowValue().setPurchasePriceProperty(event.getNewValue());
+		this.updateRecord();
+	}
 	@FXML protected void onPurchaseNumberColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
-		  System.out.println("onPurchaseNumberColumnCommit Start");
-		  event.getRowValue().setPurchaseNumberProperty(event.getNewValue());
-		  this.updateRecord();
-	  }
+		System.out.println("onPurchaseNumberColumnCommit Start");
+		event.getRowValue().setPurchaseNumberProperty(event.getNewValue());
+		this.updateRecord();
+	}
 	@FXML protected void onSellingPriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
-		  System.out.println("onSellingPriceColumnCommit Start");
-		  event.getRowValue().setSellinPriceProperty(event.getNewValue());
-		  this.updateRecord();
-	  }
+		System.out.println("onSellingPriceColumnCommit Start");
+		event.getRowValue().setSellinPriceProperty(event.getNewValue());
+		this.updateRecord();
+	}
 	@FXML protected void onSellingNumberColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
-		  System.out.println("onSellingNumberColumnCommit Start");
-		  event.getRowValue().setSellingNumberProperty(event.getNewValue());
-		  this.updateRecord();
-	  }
+		System.out.println("onSellingNumberColumnCommit Start");
+		event.getRowValue().setSellingNumberProperty(event.getNewValue());
+		this.updateRecord();
+	}
 
-		
+
 	private void updateRecord(){
-		  int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
-		  
-		  ObservableList<TradeLogRecord> recordList = tableView.getItems();
-		  TradeLogRecord record = recordList.get(indexRow);
+		int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
 
-		  System.out.println("Selected Row =" + indexRow);
-		  System.out.println(record.idProperty());
-		  System.out.println(record.dateProperty());
-		  System.out.println(record.nameProperty());
-		  System.out.println(record.purchasePriceProperty());
-		  
-		  ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
-				  record.idProperty().intValue(),
-				  Date.valueOf(record.dateProperty().getValue()), 
-				  record.codeProperty().intValue(),
-				  record.purchasePriceProperty().intValue(),
-				  record.purchaseNumProperty().intValue(),
-				  record.sellingPriceProperty().intValue(),
-				  record.sellingNumProperty().intValue());
-		  @SuppressWarnings("unused")
+		ObservableList<TradeLogRecord> recordList = tableView.getItems();
+		TradeLogRecord record = recordList.get(indexRow);
+
+		System.out.println("Selected Row =" + indexRow);
+		System.out.println(record.idProperty());
+		System.out.println(record.dateProperty());
+		System.out.println(record.nameProperty());
+		System.out.println(record.purchasePriceProperty());
+
+		ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
+				record.idProperty().intValue(),
+				Date.valueOf(record.dateProperty().getValue()), 
+				record.codeProperty().intValue(),
+				record.purchasePriceProperty().intValue(),
+				record.purchaseNumProperty().intValue(),
+				record.sellingPriceProperty().intValue(),
+				record.sellingNumProperty().intValue());
+		@SuppressWarnings("unused")
 		MySQLConnector mySQLConnector = new MySQLConnector(sqlUpdateTradeLog);		
 	}
 
-	  private void printRecord(){
-			SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
-	    	@SuppressWarnings("unused")
-			MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllTradeLog);
-	    	for ( int i = 0; i<tableView.getItems().size(); i++) {
-	    	    tableView.getItems().clear();
-	    	}
-			sqlReadAllTradeLog.recordList.forEach(e->{
-				this.tableView.getItems().add(new TradeLogRecord(
-						e.idProperty().get(),
-						e.dateProperty().get(),
-						e.codeProperty().get(),
-						e.nameProperty().get(),
-						e.marcketProperty().get(),
-						e.purchasePriceProperty().get(),
-						e.purchaseNumProperty().get(), 
-						e.sellingPriceProperty().get(), 
-						e.sellingNumProperty().get()));
-			});
-	  }
+	private void printRecord(){
+		SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
+		@SuppressWarnings("unused")
+		MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllTradeLog);
+		for ( int i = 0; i<tableView.getItems().size(); i++) {
+			tableView.getItems().clear();
+		}
+		sqlReadAllTradeLog.recordList.forEach(e->{
+			this.tableView.getItems().add(new TradeLogRecord(
+					e.idProperty().get(),
+					e.dateProperty().get(),
+					e.codeProperty().get(),
+					e.nameProperty().get(),
+					e.marcketProperty().get(),
+					e.purchasePriceProperty().get(),
+					e.purchaseNumProperty().get(), 
+					e.sellingPriceProperty().get(), 
+					e.sellingNumProperty().get()));
+		});
+	}
 }
