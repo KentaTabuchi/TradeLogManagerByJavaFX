@@ -57,7 +57,7 @@ public class SQLReadAllTradeLog implements ISQLExecutable {
 
 					TradeLogRecord record = new TradeLogRecord(
 							id,
-							date.toString(),
+							date,
 							code,
 							name,
 							marcket,

@@ -24,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLReadAllTradeLog;
@@ -110,7 +111,7 @@ public class TradeLogTableStageController implements Initializable{
 		sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
 
 		//setCellFactory Method make a column Editable. 
-		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
 		codeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -125,10 +126,10 @@ public class TradeLogTableStageController implements Initializable{
 	 * tableView.getItems means all recored.
 	 * ObservableList<TradeLogRecord> means all record.
 	 */
-	@FXML protected void onTradeDateColumnCommit(CellEditEvent<TradeLogRecord,String> event){
+	@FXML protected void onTradeDateColumnCommit(CellEditEvent<TradeLogRecord,Date> event){
 		System.out.println("onTradeDateColumnCommit Start");
 
-		try{event.getRowValue().setDateProperty(Date.valueOf(event.getNewValue()));}
+		try{event.getRowValue().setDateProperty((event.getNewValue()));}
 		catch(IllegalArgumentException e){
 			System.out.println("Input failed.Please input correct Date");
 			Alert alert = new Alert(AlertType.ERROR,"Please input correct Date",ButtonType.OK);
@@ -172,13 +173,13 @@ public class TradeLogTableStageController implements Initializable{
 
 		System.out.println("Selected Row =" + indexRow);
 		System.out.println(record.idProperty());
-		System.out.println(record.dateProperty());
+		System.out.println(record.dateProperty().toString());
 		System.out.println(record.nameProperty());
 		System.out.println(record.purchasePriceProperty());
 
 		ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
 				record.idProperty().intValue(),
-				Date.valueOf(record.dateProperty().getValue()), 
+				new java.sql.Date(record.dateProperty().getValue().getTime()),
 				record.codeProperty().intValue(),
 				record.purchasePriceProperty().intValue(),
 				record.purchaseNumProperty().intValue(),

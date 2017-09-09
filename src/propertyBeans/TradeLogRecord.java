@@ -3,12 +3,14 @@ package propertyBeans;
 import java.util.Date;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 public class TradeLogRecord {
 	private  IntegerProperty id;
-	private StringProperty date;
+	private ObjectProperty<Date> date;
 	private IntegerProperty code;
 	private StringProperty name;
 	private StringProperty marcket;
@@ -17,10 +19,11 @@ public class TradeLogRecord {
 	private  IntegerProperty sellingPrice;
 	private IntegerProperty sellingNum;
 	
-	public TradeLogRecord(int id, String date, int code, String name,String marcket ,int purchasePrice,
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public TradeLogRecord(int id, Date date, int code, String name,String marcket ,int purchasePrice,
 			int purchaseNum, int sellingPrice, int sellingNum) {
 		this.id= new SimpleIntegerProperty(id);
-		this.date= new SimpleStringProperty(date);
+		this.date= new SimpleObjectProperty(date);
 		this.code= new SimpleIntegerProperty(code);
 		this.name= new SimpleStringProperty(name);
 		this.marcket = new SimpleStringProperty(marcket);
@@ -33,7 +36,7 @@ public class TradeLogRecord {
 	public IntegerProperty idProperty() {
 		return id;
 	}
-	public StringProperty dateProperty(){
+	public ObjectProperty<Date> dateProperty(){
 		return date;
 	}
 	public IntegerProperty codeProperty(){
@@ -60,8 +63,9 @@ public class TradeLogRecord {
 	public void setIdProperty(int id){
 		this.id = new SimpleIntegerProperty(id);
 	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setDateProperty(Date date){
-		this.date = new SimpleStringProperty(date.toString());
+		this.date = new SimpleObjectProperty(date);
 	}
 	public void setCodeProperty(int code){
 		this.code = new SimpleIntegerProperty(code);
