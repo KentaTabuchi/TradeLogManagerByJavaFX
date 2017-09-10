@@ -18,12 +18,19 @@
           <TableColumn fx:id="codeColumn" onEditCommit="#onSecuritiesCodeColumnCommit" prefWidth="70.0" text="CODE" />
             <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
             <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
-            <TableColumn fx:id="dateColumn" onEditCommit="#onTradeDateColumnCommit" prefWidth="101.0" text="DATE" />
-            <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="126.0" text="PURCHASE PRICE" />
-            <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="50.0" text="NUM" />
-            <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" prefWidth="101.0" text="SELLING PRICE" />
-            <TableColumn fx:id="sellingNumColumn" minWidth="0.0" onEditCommit="#onSellingNumberColumnCommit" prefWidth="55.0" text="NUM" />
+            <TableColumn fx:id="dateColumn" onEditCommit="#onTradeDateColumnCommit" prefWidth="152.0" text="DATE" />
+            <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="124.0" text="PURCHASE PRICE" />
+            <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="60.0" text="NUM" />
+            <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" prefWidth="113.0" text="SELLING PRICE" />
+            <TableColumn fx:id="sellingNumColumn" minWidth="0.0" onEditCommit="#onSellingNumberColumnCommit" prefWidth="43.0" text="NUM" />
         </columns>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#onContextMenuRequested" text="Delete Selection Record" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </TableView>
    </center>
    <top>

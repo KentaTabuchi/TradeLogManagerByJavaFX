@@ -27,9 +27,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import propertyBeans.TradeLogRecord;
+import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLReadAllTradeLog;
 import sqlPublication.SQLUpdateTradeLog;
@@ -99,7 +99,6 @@ public class TradeLogTableStageController implements Initializable{
 		System.out.println("starting onReloadLogs Menu Click was successed.");
 		this.printRecord();
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		this.setCellValueFactoryes();
@@ -194,7 +193,21 @@ public class TradeLogTableStageController implements Initializable{
 		event.getRowValue().setSellingNumberProperty(event.getNewValue());
 		this.updateRecord();
 	}
-
+	@FXML protected void onContextMenuRequested(){
+		System.out.println("onContextMuenuRequested Start");
+		int indexRow = this.tableView.getSelectionModel().getSelectedIndex();
+		System.out.println(indexRow);
+		ObservableList<TradeLogRecord> recordList = tableView.getItems();
+		try{
+			TradeLogRecord record = recordList.get(indexRow);
+			SQLDeleteTradeLog sqlDeleteTradeLog = new SQLDeleteTradeLog(record.idProperty().intValue());
+			@SuppressWarnings("unused")
+			MySQLConnector con = new MySQLConnector(sqlDeleteTradeLog);}
+		catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("Record is not selected.Please select any record.");
+		}
+		this.printRecord();
+	}
 
 	private void updateRecord(){
 		int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
@@ -220,12 +233,15 @@ public class TradeLogTableStageController implements Initializable{
 		MySQLConnector mySQLConnector = new MySQLConnector(sqlUpdateTradeLog);		
 	}
 
-	private void printRecord(){
+	public void printRecord(){
 		SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
 		MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllTradeLog);
+		try{
 		for ( int i = 0; i<tableView.getItems().size(); i++) {
 			tableView.getItems().clear();
+		}}catch(IndexOutOfBoundsException e){
+			System.out.println("IndexOutOfBoudsException. please check look counter in the printrecord");
 		}
 		sqlReadAllTradeLog.recordList.forEach(e->{
 			this.tableView.getItems().add(new TradeLogRecord(
