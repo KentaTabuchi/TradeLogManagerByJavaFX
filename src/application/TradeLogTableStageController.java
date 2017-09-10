@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import customControl.DatePickerTableCell;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
-import propertyBeans.BookInfoRecord;
 import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLReadAllTradeLog;
@@ -102,6 +102,31 @@ public class TradeLogTableStageController implements Initializable{
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		this.setCellValueFactoryes();
+		this.setCellFactoryes();
+		this.printRecord();
+	}
+	/**
+	 * setCellFactory Method make a column Editable. 
+	 * dateColumn.setCellFactory(DatePickerTableCell.setTableColumn(dateColumn);
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void setCellFactoryes(){
+		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
+		@SuppressWarnings("unused")
+		MySQLConnector connector = new MySQLConnector(sqlReadAllTradeLog);
+        dateColumn.setCellFactory(p -> {
+		    DatePickerTableCell datePick = new DatePickerTableCell(sqlReadAllTradeLog.recordList);
+		    return datePick;
+		});
+		codeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.getSecuritiesCodeList().toArray()));
+		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+	}
+	@SuppressWarnings("unchecked")
+	private void setCellValueFactoryes(){
 		//引数の"id","date"などの文字列がPropertyBeansクラスのTradeLogRecordのprivate変数名と完全一致させると
 		//TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
 		idColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("id"));
@@ -114,15 +139,6 @@ public class TradeLogTableStageController implements Initializable{
 		sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
 		sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
 
-		//setCellFactory Method make a column Editable. 
-		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
-		codeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.getSecuritiesCodeList().toArray()));
-		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-
-		this.printRecord();
 	}
 	private ArrayList<Integer> getSecuritiesCodeList(){
 		ArrayList<Integer> list = new ArrayList<>();
