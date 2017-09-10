@@ -6,6 +6,7 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -20,13 +21,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import propertyBeans.BookInfoRecord;
 import propertyBeans.TradeLogRecord;
+import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLReadAllTradeLog;
 import sqlPublication.SQLUpdateTradeLog;
 
@@ -112,13 +116,24 @@ public class TradeLogTableStageController implements Initializable{
 
 		//setCellFactory Method make a column Editable. 
 		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
-		codeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		codeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.getSecuritiesCodeList().toArray()));
 		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
 		this.printRecord();
+	}
+	private ArrayList<Integer> getSecuritiesCodeList(){
+		ArrayList<Integer> list = new ArrayList<>();
+		SQLReadAllBookInfo sqlReadAllbookInfo = new SQLReadAllBookInfo();
+		@SuppressWarnings("unused")
+		MySQLConnector connector = new MySQLConnector(sqlReadAllbookInfo);
+		sqlReadAllbookInfo.recordList.forEach(e->{
+			list.add(e.securitiesCodeProperty().get());
+		});
+		return list;
+  
 	}
 
 	/**
@@ -140,8 +155,8 @@ public class TradeLogTableStageController implements Initializable{
 	@FXML protected void onSecuritiesCodeColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
 		System.out.println("onSecuritiesCodeColumnCommit Start");
 		event.getRowValue().setCodeProperty(event.getNewValue());
-
 		this.updateRecord();
+		this.printRecord();
 	}
 	@FXML protected void onPurchasePriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
 		System.out.println("onPurchasePriceColumnCommit Start");
