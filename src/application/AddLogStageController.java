@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import sqlPublication.SQLAddTradeLog;
 
 public class AddLogStageController {
@@ -34,5 +35,15 @@ public class AddLogStageController {
 									Integer.parseInt(this.sellingNumText.getText()));
     	@SuppressWarnings("unused")
 		MySQLConnector mysqlConnector = new MySQLConnector(sqlExecutable);
+		TradeLogTableStageController controller;
+		controller = Main.tradeLogTableStageController;
+		controller.printRecord();
+	}
+	@FXML protected void onTestButtonClick(ActionEvent evt){
+		System.out.println("TestButton Clicked");
+		TradeLogTableStageController controller;
+		controller = Main.tradeLogTableStageController;
+		System.out.println(controller.toString());
+	
 	}
 }

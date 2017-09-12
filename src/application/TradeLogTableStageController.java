@@ -95,6 +95,10 @@ public class TradeLogTableStageController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	@Override public String toString(){
+		return "This is the Controller which is Controll fxml.";
+		
+	}
 	@FXML protected void onReloadLogsClick(ActionEvent evt){
 		System.out.println("starting onReloadLogs Menu Click was successed.");
 		this.printRecord();
