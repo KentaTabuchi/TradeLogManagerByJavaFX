@@ -48,7 +48,6 @@
             <Label text="Code" GridPane.rowIndex="2" />
             <Label text="PurchasePrice" GridPane.rowIndex="3" />
             <TextField fx:id="idText" prefHeight="27.0" prefWidth="202.0" GridPane.columnIndex="1" />
-            <TextField fx:id="codeText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="purchasePriceText" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Date" GridPane.rowIndex="1">
                <font>
@@ -62,6 +61,7 @@
             <Label text="SellingNum" GridPane.rowIndex="6" />
             <TextField fx:id="sellingNumText" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="codeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </center>

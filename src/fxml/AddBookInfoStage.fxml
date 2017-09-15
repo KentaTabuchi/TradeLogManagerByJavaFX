@@ -31,7 +31,7 @@
             <Label text="MARKET" GridPane.rowIndex="2" />
             <TextField fx:id="securitiesCodeText" prefHeight="25.0" prefWidth="254.0" GridPane.columnIndex="1" />
             <TextField fx:id="bookNameText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="marcketText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="marcketCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </center>

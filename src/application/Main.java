@@ -14,13 +14,13 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TradeLogTableStage.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/TradeLogTableStage.fxml"));
 			Scene scene = new Scene((BorderPane)fxmlLoader.load());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			primaryStage.setWidth(800);
-			primaryStage.setX(primaryStage.getX()-200);
+			primaryStage.setWidth(900);
+			primaryStage.setX(primaryStage.getX());
 			tradeLogTableStageController = fxmlLoader.getController();
 		} catch(Exception e) {
 			e.printStackTrace();

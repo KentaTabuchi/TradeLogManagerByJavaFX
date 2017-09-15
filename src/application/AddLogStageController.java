@@ -1,16 +1,22 @@
 package application;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import sqlPublication.SQLAddTradeLog;
+import sqlPublication.SQLReadAllBookInfo;
 
-public class AddLogStageController {
+public class AddLogStageController implements Initializable{
 	@FXML TextField idText;
 	@FXML DatePicker datePicker;
-	@FXML TextField codeText;
+	@FXML ComboBox<Integer> codeCombo;
 	@FXML TextField purchasePriceText;
 	@FXML TextField purchaseNumText;
 	@FXML TextField sellingPriceText;
@@ -22,13 +28,13 @@ public class AddLogStageController {
 		System.out.println("AddButton was Clicked from AddLogStage");
 		System.out.println(this.idText.getText());
 		System.out.println(this.datePicker.getValue());
-		System.out.println(codeText.getText());
+		System.out.println(codeCombo.getValue());
 		System.out.println(purchasePriceText.getText());
 		
 		ISQLExecutable sqlExecutable= 
 				new SQLAddTradeLog(	Integer.parseInt(this.idText.getText()),
 									java.sql.Date.valueOf(this.datePicker.getValue()),
-									Integer.parseInt(this.codeText.getText()),
+									Integer.parseInt(this.codeCombo.getValue().toString()),
 									Integer.parseInt(this.purchasePriceText.getText()),
 									Integer.parseInt(this.purchaseNumText.getText()),
 									Integer.parseInt(this.sellingPriceText.getText()), 
@@ -45,5 +51,21 @@ public class AddLogStageController {
 		controller = Main.tradeLogTableStageController;
 		System.out.println(controller.toString());
 	
+	}
+	
+	private ArrayList<Integer> getSecuritiesCodeList(){
+		ArrayList<Integer> list = new ArrayList<>();
+		SQLReadAllBookInfo sqlReadAllbookInfo = new SQLReadAllBookInfo();
+		@SuppressWarnings("unused")
+		MySQLConnector connector = new MySQLConnector(sqlReadAllbookInfo);
+		sqlReadAllbookInfo.recordList.forEach(e->{
+			list.add(e.securitiesCodeProperty().get());
+		});
+		return list;
+  
+	}
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.codeCombo.getItems().addAll((this.getSecuritiesCodeList()));
 	}
 }

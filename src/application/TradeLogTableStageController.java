@@ -38,7 +38,7 @@ import sqlPublication.SQLUpdateTradeLog;
  * @author misskabu
  *
  */
-public class TradeLogTableStageController implements Initializable{
+public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableView<TradeLogRecord> tableView;
 	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn idColumn;
@@ -83,7 +83,7 @@ public class TradeLogTableStageController implements Initializable{
 		Stage stage = new Stage();
 		BorderPane root;
 		try {
-			root = (BorderPane)FXMLLoader.load(getClass().getResource(fxmlFileName));
+			root = (BorderPane)FXMLLoader.load(getClass().getResource("/fxml/" + fxmlFileName));
 			Scene scene = new Scene(root,width,height);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
@@ -160,6 +160,9 @@ public class TradeLogTableStageController implements Initializable{
 	 * tableView.getItems means all recored.
 	 * ObservableList<TradeLogRecord> means all record.
 	 */
+	@FXML protected void onStart(){
+		System.out.println("start");
+	}
 	@FXML protected void onTradeDateColumnCommit(CellEditEvent<TradeLogRecord,Date> event){
 		System.out.println("onTradeDateColumnCommit Start");
 

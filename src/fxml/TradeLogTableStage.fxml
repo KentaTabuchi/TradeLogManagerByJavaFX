@@ -18,7 +18,7 @@
           <TableColumn fx:id="codeColumn" onEditCommit="#onSecuritiesCodeColumnCommit" prefWidth="70.0" text="CODE" />
             <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
             <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
-            <TableColumn fx:id="dateColumn" onEditCommit="#onTradeDateColumnCommit" prefWidth="152.0" text="DATE" />
+            <TableColumn fx:id="dateColumn" onEditCommit="#onTradeDateColumnCommit" onEditStart="#onStart" prefWidth="152.0" text="DATE" />
             <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="124.0" text="PURCHASE PRICE" />
             <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="60.0" text="NUM" />
             <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" prefWidth="113.0" text="SELLING PRICE" />
