@@ -9,7 +9,8 @@ import java.sql.*;
  * 
  */
 public class MySQLConnector {
-		private final static String DATABASE_PASS = "jdbc:mysql://127.0.0.1/TradeLog?autoReconnect=true&useSSL=false";
+	private final String H2DRIVER = "org.h2.Driver";
+	private final String PASS_H2DB_TRADE = "jdbc:h2:./db/trade";
 		private final static String USER = "root"; 
 		private final static String PASSWORD = "";	
 	/**
@@ -20,21 +21,21 @@ public class MySQLConnector {
         Connection con = null;
         try {
             // JDBCドライバのロード - JDBC4.0（JDK1.6）以降は不要
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName(H2DRIVER).newInstance();
             // MySQLに接続
-            con = DriverManager.getConnection(DATABASE_PASS,USER,PASSWORD);
-            System.out.println("MySQLに接続できました。");
+            con = DriverManager.getConnection(PASS_H2DB_TRADE,USER,PASSWORD);
+            System.out.println("H2Databaseに接続できました。");
             sqlExecutable.executeQuery(con); //delegate to an other Class what inherited ISQLExecutable
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             System.out.println("JDBCドライバのロードに失敗しました。");
         } catch (SQLException e) {
-            System.out.println("MySQLに接続できませんでした。");
+            System.out.println("H2Databaseに接続できませんでした。");
         } finally {
             if (con != null) {
                 try {
                     con.close();
                 } catch (SQLException e) {
-                    System.out.println("MySQLのクローズに失敗しました。");
+                    System.out.println("H2Databaseのクローズに失敗しました。");
                 }
             }
         }		

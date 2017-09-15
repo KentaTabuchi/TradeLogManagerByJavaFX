@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/tabuchikenta/Documents/Eclipse/TradeLogger/DBdriver/mysql-connector-java-5.1.44-bin.jar"/>
+	<classpathentry kind="lib" path="/Applications/h2/bin/h2-1.4.192.jar" sourcepath="/Applications/h2/bin/h2-1.4.192.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
