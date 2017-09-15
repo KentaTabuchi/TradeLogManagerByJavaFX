@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +17,6 @@ import propertyBeans.BookInfoRecord;
 import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLUpdateBookInfo;
-import sqlPublication.SQLUpdateTradeLog;
 
 public class BookInfoTableStageController implements Initializable {
     @FXML private TableView<BookInfoRecord> tableView;
