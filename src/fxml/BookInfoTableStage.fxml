@@ -7,11 +7,11 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BookInfoTableStageController">
    <center>
-      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="348.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" editable="true" prefHeight="200.0" prefWidth="348.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="codeColumn" text="CODE" />
           <TableColumn fx:id="bookNameColumn" prefWidth="180.0" text="BOOK NAME " />
-            <TableColumn fx:id="marcketColumn" prefWidth="85.0" text="MARCKET" />
+            <TableColumn fx:id="marcketColumn" onEditCommit="#onMarcketColumnCommit" prefWidth="85.0" text="MARCKET" />
         </columns>
       </TableView>
    </center>

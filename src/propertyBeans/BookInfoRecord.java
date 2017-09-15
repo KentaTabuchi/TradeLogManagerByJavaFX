@@ -24,5 +24,8 @@ public class BookInfoRecord {
 	public StringProperty marcketProperty(){
 		return marcket;
 	}
+	public void setMarcketProperty(String marcket){
+		this.marcket = new SimpleStringProperty(marcket);
+	}
 
 }
