@@ -17,7 +17,6 @@ public class SQLAddTradeLog implements ISQLExecutable {
 	/* (非 Javadoc)
 	 * @see application.ISQLExcutable#excuteQuery()
 	 */
-	private int id;
 	private Date tradeDate;
 	private int securitiedCode;
 	private int purchasePrice;
@@ -26,17 +25,17 @@ public class SQLAddTradeLog implements ISQLExecutable {
 	private int sellingNumber;
 	
 	final String SQL = "INSERT INTO TRADE_LOG ("
-			+ "ID,"//1
+			
 			+ "TRADE_DATE,"//2
 			+ "SECURITIES_CODE,"//3
 			+ "PURCHASE_PRICE,"//4
 			+ "PURCHASE_NUMBER,"//5
 			+ "SELLING_PRICE,"//6
 			+ "SELLING_NUMBER"//7
-			+ ") VALUES(?,?,?,?,?,?,?)";
+			+ ") VALUES(?,?,?,?,?,?)";
 	
 	public SQLAddTradeLog(
-			int id,
+		
 			Date tradeDate,
 			int securitiedCode,
 			int purchasePrice,
@@ -44,7 +43,7 @@ public class SQLAddTradeLog implements ISQLExecutable {
 			int sellingPrice,
 			int sellingNumber){
 		
-		this.id = id;
+
 		this.tradeDate = tradeDate;
 		this.securitiedCode = securitiedCode;
 		this.purchasePrice = purchasePrice;
@@ -55,13 +54,13 @@ public class SQLAddTradeLog implements ISQLExecutable {
 	@Override
 	public void executeQuery(Connection con) {
 			try(PreparedStatement ps = con.prepareStatement(this.SQL)){
-			ps.setInt(1,this.id);
-			ps.setDate(2,this.tradeDate);
-			ps.setInt(3,this.securitiedCode);
-			ps.setInt(4, this.purchasePrice);
-			ps.setInt(5, this.purchaseNumber);
-			ps.setInt(6, this.sellingPrice);
-			ps.setInt(7, this.sellingNumber);
+			//ps.setInt(1,this.id);
+			ps.setDate(1,this.tradeDate);
+			ps.setInt(2,this.securitiedCode);
+			ps.setInt(3, this.purchasePrice);
+			ps.setInt(4, this.purchaseNumber);
+			ps.setInt(5, this.sellingPrice);
+			ps.setInt(6, this.sellingNumber);
 			int result = ps.executeUpdate();
 				if(result!=0){
 					System.out.println(result + "件のレコード書き込みに成功しました");

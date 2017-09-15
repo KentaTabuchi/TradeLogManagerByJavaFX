@@ -14,7 +14,7 @@ import sqlPublication.SQLAddTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 
 public class AddLogStageController implements Initializable{
-	@FXML TextField idText;
+
 	@FXML DatePicker datePicker;
 	@FXML ComboBox<Integer> codeCombo;
 	@FXML TextField purchasePriceText;
@@ -26,13 +26,13 @@ public class AddLogStageController implements Initializable{
 	@FXML protected void onAddButtonClick(ActionEvent evt){
 	
 		System.out.println("AddButton was Clicked from AddLogStage");
-		System.out.println(this.idText.getText());
+		
 		System.out.println(this.datePicker.getValue());
 		System.out.println(codeCombo.getValue());
 		System.out.println(purchasePriceText.getText());
 		
 		ISQLExecutable sqlExecutable= 
-				new SQLAddTradeLog(	Integer.parseInt(this.idText.getText()),
+				new SQLAddTradeLog(	
 									java.sql.Date.valueOf(this.datePicker.getValue()),
 									Integer.parseInt(this.codeCombo.getValue().toString()),
 									Integer.parseInt(this.purchasePriceText.getText()),
