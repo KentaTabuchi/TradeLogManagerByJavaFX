@@ -53,6 +53,7 @@ public class SQLReadAllTradeLog implements ISQLExecutable {
 					Integer purchaseNum=rs.getInt("PURCHASE_NUMBER");
 					Integer sellingPrice=rs.getInt("SELLING_PRICE");
 					Integer sellingNum=rs.getInt("SELLING_NUMBER");
+					String memo = rs.getString("MEMO");
 					System.out.println(id+date.toString()+code+name+purchasePrice+purchaseNum+sellingPrice+sellingNum);
 
 					TradeLogRecord record = new TradeLogRecord(
@@ -64,7 +65,8 @@ public class SQLReadAllTradeLog implements ISQLExecutable {
 							purchasePrice,
 							purchaseNum,
 							sellingPrice,
-							sellingNum);
+							sellingNum,
+							memo);
 					recordList.add(record);
 				}
 			} catch (SQLException e) {

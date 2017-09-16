@@ -1,6 +1,7 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -35,7 +36,7 @@ public class Main extends Application {
 	    	ISQLExecutable sqlCreateBookInfoTable = new SQLCreateBookInfoTable();
 	    	@SuppressWarnings("unused")
 			H2DBConnector Connector2 = new H2DBConnector(sqlCreateBookInfoTable);
-	    	
+	    	Platform.exit();
 	
 		}
 	}

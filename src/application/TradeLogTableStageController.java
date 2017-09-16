@@ -60,6 +60,9 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableColumn sellingPriceColumn;
 	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn sellingNumColumn;
+	@SuppressWarnings("rawtypes")
+	@FXML private TableColumn memoColumn;
+	
 
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddLogWindowMenuClick was successed.");
@@ -93,22 +96,7 @@ public  class TradeLogTableStageController implements Initializable{
 	 * @param height
 	 * 
 	 */
-	private void createBoderPaneStage(String fxmlFileName,int posX,int posY,int width,int height){
-		Stage stage = new Stage();
-		BorderPane root;
-		try {
-			root = (BorderPane)FXMLLoader.load(getClass().getResource("/fxml/" + fxmlFileName));
-			Scene scene = new Scene(root,width,height);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage.setScene(scene);
-			stage.show();
-			stage.setX(stage.getX()+posX);
-			stage.setY(stage.getY()+posY);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-	}
+
 	private void createBoderPaneStage(String fxmlFileName,String title,int posX,int posY,int width,int height){
 		Stage stage = new Stage();
 		BorderPane root;
@@ -160,6 +148,8 @@ public  class TradeLogTableStageController implements Initializable{
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		memoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		
 	}
 	@SuppressWarnings("unchecked")
 	private void setCellValueFactoryes(){
@@ -174,6 +164,7 @@ public  class TradeLogTableStageController implements Initializable{
 		purchaseNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchaseNum"));
 		sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
 		sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
+		memoColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("memo"));
 
 	}
 	private ArrayList<Integer> getSecuritiesCodeList(){
@@ -293,7 +284,8 @@ public  class TradeLogTableStageController implements Initializable{
 					e.purchasePriceProperty().get(),
 					e.purchaseNumProperty().get(), 
 					e.sellingPriceProperty().get(), 
-					e.sellingNumProperty().get()));
+					e.sellingNumProperty().get(),
+					e.memoProperty().get()));
 		});
 	}
 }

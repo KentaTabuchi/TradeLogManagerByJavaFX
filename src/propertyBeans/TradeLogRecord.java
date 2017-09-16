@@ -18,10 +18,11 @@ public class TradeLogRecord {
 	private  IntegerProperty purchaseNum;
 	private  IntegerProperty sellingPrice;
 	private IntegerProperty sellingNum;
+	private StringProperty memo;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TradeLogRecord(int id, Date date, int code, String name,String marcket ,int purchasePrice,
-			int purchaseNum, int sellingPrice, int sellingNum) {
+			int purchaseNum, int sellingPrice, int sellingNum,String memo) {
 		this.id= new SimpleIntegerProperty(id);
 		this.date= new SimpleObjectProperty(date);
 		this.code= new SimpleIntegerProperty(code);
@@ -31,6 +32,7 @@ public class TradeLogRecord {
 		this.purchaseNum = new SimpleIntegerProperty(purchaseNum);
 		this.sellingPrice = new SimpleIntegerProperty(sellingPrice);
 		this.sellingNum = new SimpleIntegerProperty(sellingNum);
+		this.memo = new SimpleStringProperty(memo);
 	}
 
 	public IntegerProperty idProperty() {
@@ -60,6 +62,9 @@ public class TradeLogRecord {
 	public IntegerProperty sellingNumProperty(){
 		return sellingNum;
 	}
+	public StringProperty memoProperty(){
+		return memo;
+	}
 	public void setIdProperty(int id){
 		this.id = new SimpleIntegerProperty(id);
 	}
@@ -81,5 +86,8 @@ public class TradeLogRecord {
 	}
 	public void setSellingNumberProperty(int sellingNumber){
 		this.sellingNum = new SimpleIntegerProperty(sellingNumber);
+	}
+	public void setMemoProperty(String memo){
+		this.memo = new SimpleStringProperty(memo);
 	}
 }
