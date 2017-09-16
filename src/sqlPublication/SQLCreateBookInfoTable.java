@@ -27,7 +27,7 @@ public class SQLCreateBookInfoTable implements ISQLExecutable {
 		System.out.println(this.SQL);
 		try(PreparedStatement ps = con.prepareStatement(this.SQL)){
 
-			int result = ps.executeUpdate();
+			ps.executeUpdate();
 		
 				System.out.println("Create Table has sucessed.");
 }

@@ -1,10 +1,8 @@
 package test;
 
+import application.H2DBConnector;
 import application.ISQLExecutable;
-import application.MySQLConnector;
-import sqlPublication.SQLCreateBookInfoTable;
 import sqlPublication.SQLCreateTradeLogTable;
-import sqlPublication.SQLDropTradeLogTable;
 
 
 public class Tester {
@@ -17,7 +15,6 @@ public class Tester {
 		public static void main(String[] args) {
 			//ISQLExecutable sqlExecutable= new SQLDropTradeLogTable();
 			ISQLExecutable sqlExecutable= new SQLCreateTradeLogTable();
-			
-	    	MySQLConnector mysqlConnector = new MySQLConnector(sqlExecutable);
+	    	H2DBConnector mysqlConnector = new H2DBConnector(sqlExecutable);
 	    }
 }

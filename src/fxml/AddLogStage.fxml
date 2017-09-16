@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -19,8 +21,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="36.0" prefWidth="281.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onAddButtonClick" text="Add" />
-            <Button mnemonicParsing="false" onAction="#onTestButtonClick" text="TestButton" />
+            <Button mnemonicParsing="false" onAction="#onAddButtonClick" text="Add to table" />
          </children>
       </HBox>
    </bottom>
@@ -59,6 +60,9 @@
       </GridPane>
    </center>
    <top>
-      <Label text="Add new record" textFill="#833333" underline="true" BorderPane.alignment="CENTER" />
+      <Label text="Please input follow data to add new record" textFill="#833333" BorderPane.alignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></Label>
    </top>
 </BorderPane>

@@ -63,7 +63,7 @@ public class BookInfoTableStageController implements Initializable {
 	  private void printRecord(){
 			SQLReadAllBookInfo sqlReadAllBookInfo= new SQLReadAllBookInfo();
 	    	@SuppressWarnings("unused")
-			MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllBookInfo);
+			H2DBConnector mysqlConnector = new H2DBConnector(sqlReadAllBookInfo);
 	    	for ( int i = 0; i<tableView.getItems().size(); i++) {
 	    	    tableView.getItems().clear();
 	    	}
@@ -92,6 +92,6 @@ public class BookInfoTableStageController implements Initializable {
 					record.marcketProperty().getValue()
 					);
 			@SuppressWarnings("unused")
-			MySQLConnector mySQLConnector = new MySQLConnector(sqlUpdateBookInfo);		
+			H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateBookInfo);		
 		}
 }

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import application.H2DBConnector;
 import application.ISQLExecutable;
-import application.MySQLConnector;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContentDisplay;
@@ -121,7 +122,7 @@ public class DatePickerTableCell<S, T> extends TableCell<TradeLogRecord, Date> {
 		List<TradeLogRecord> recordList=null;
 		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
-		MySQLConnector con = new MySQLConnector(sqlReadAllTradeLog);
+		H2DBConnector con = new H2DBConnector(sqlReadAllTradeLog);
 		recordList = sqlReadAllTradeLog.recordList;
 		TradeLogRecord record = recordList.get(indexRow);
 
@@ -134,7 +135,7 @@ public class DatePickerTableCell<S, T> extends TableCell<TradeLogRecord, Date> {
 				record.sellingPriceProperty().intValue(),
 				record.sellingNumProperty().intValue());
 		@SuppressWarnings("unused")
-		MySQLConnector mySQLConnector = new MySQLConnector(sqlUpdateTradeLog);	
+		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);	
     }
     
     public ArrayList<TradeLogRecord> getTradeLogRecord() {

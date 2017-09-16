@@ -2,6 +2,8 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
+import sqlPublication.SQLCreateBookInfoTable;
+import sqlPublication.SQLCreateTradeLogTable;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
@@ -21,9 +23,20 @@ public class Main extends Application {
 			primaryStage.show();
 			primaryStage.setWidth(900);
 			primaryStage.setX(primaryStage.getX());
+			primaryStage.setTitle("TradeLogTableStage");
 			tradeLogTableStageController = fxmlLoader.getController();
-		} catch(Exception e) {
+		} 
+
+		catch(Exception e) {
 			e.printStackTrace();
+			ISQLExecutable sqlCreateTradeLogTable= new SQLCreateTradeLogTable();
+	    	@SuppressWarnings("unused")
+			H2DBConnector Connector = new H2DBConnector(sqlCreateTradeLogTable);
+	    	ISQLExecutable sqlCreateBookInfoTable = new SQLCreateBookInfoTable();
+	    	@SuppressWarnings("unused")
+			H2DBConnector Connector2 = new H2DBConnector(sqlCreateBookInfoTable);
+	    	
+	
 		}
 	}
 	

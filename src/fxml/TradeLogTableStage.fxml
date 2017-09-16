@@ -36,16 +36,6 @@
    <top>
       <MenuBar layoutX="-200.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
             <Menu mnemonicParsing="false" text="Table">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onReloadLogsClick" text="Reload Logs" />

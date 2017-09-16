@@ -35,7 +35,7 @@ public class AddBookInfoStageController implements Initializable{
 									this.bookNameText.getText(),
 									this.marcketCombo.getValue().toString());
     	@SuppressWarnings("unused")
-		MySQLConnector mysqlConnector = new MySQLConnector(sqlExecutable);
+		H2DBConnector mysqlConnector = new H2DBConnector(sqlExecutable);
     
     	
 	}

@@ -40,24 +40,18 @@ public class AddLogStageController implements Initializable{
 									Integer.parseInt(this.sellingPriceText.getText()), 
 									Integer.parseInt(this.sellingNumText.getText()));
     	@SuppressWarnings("unused")
-		MySQLConnector mysqlConnector = new MySQLConnector(sqlExecutable);
+		H2DBConnector mysqlConnector = new H2DBConnector(sqlExecutable);
 		TradeLogTableStageController controller;
 		controller = Main.tradeLogTableStageController;
 		controller.printRecord();
 	}
-	@FXML protected void onTestButtonClick(ActionEvent evt){
-		System.out.println("TestButton Clicked");
-		TradeLogTableStageController controller;
-		controller = Main.tradeLogTableStageController;
-		System.out.println(controller.toString());
-	
-	}
+
 	
 	private ArrayList<Integer> getSecuritiesCodeList(){
 		ArrayList<Integer> list = new ArrayList<>();
 		SQLReadAllBookInfo sqlReadAllbookInfo = new SQLReadAllBookInfo();
 		@SuppressWarnings("unused")
-		MySQLConnector connector = new MySQLConnector(sqlReadAllbookInfo);
+		H2DBConnector connector = new H2DBConnector(sqlReadAllbookInfo);
 		sqlReadAllbookInfo.recordList.forEach(e->{
 			list.add(e.securitiesCodeProperty().get());
 		});

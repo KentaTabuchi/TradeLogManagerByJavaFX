@@ -61,15 +61,15 @@ public  class TradeLogTableStageController implements Initializable{
 
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddLogWindowMenuClick was successed.");
-		this.createBoderPaneStage("AddLogStage.fxml",350,0, 400, 400);
+		this.createBoderPaneStage("AddLogStage.fxml","AddLogStage",350,0, 400, 400);
 	}
 	@FXML protected void onShowAddBookInfoWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddBookInfoWindowMenuClick was successed.");
-		this.createBoderPaneStage("AddBookInfoStage.fxml",350,0, 400, 170);
+		this.createBoderPaneStage("AddBookInfoStage.fxml","AddBookInfoStage",350,0, 400, 170);
 	}
 	@FXML protected void onShowBookInfoTableWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowBookInfoTableWindowMenuClick was successed.");
-		this.createBoderPaneStage("BookInfoTableStage.fxml",100,100, 400, 500);
+		this.createBoderPaneStage("BookInfoTableStage.fxml","BookInfoTableStage",100,100, 400, 500);
 	}
 	/**
 	 * @param fxmlFileName
@@ -95,6 +95,23 @@ public  class TradeLogTableStageController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	private void createBoderPaneStage(String fxmlFileName,String title,int posX,int posY,int width,int height){
+		Stage stage = new Stage();
+		BorderPane root;
+		try {
+			root = (BorderPane)FXMLLoader.load(getClass().getResource("/fxml/" + fxmlFileName));
+			Scene scene = new Scene(root,width,height);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+			stage.setX(stage.getX()+posX);
+			stage.setY(stage.getY()+posY);
+			stage.setTitle(title);
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
 	@Override public String toString(){
 		return "This is the Controller which is Controll fxml.";
 		
@@ -105,9 +122,11 @@ public  class TradeLogTableStageController implements Initializable{
 	}
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		
 		this.setCellValueFactoryes();
 		this.setCellFactoryes();
 		this.printRecord();
+
 	}
 	/**
 	 * setCellFactory Method make a column Editable. 
@@ -117,7 +136,7 @@ public  class TradeLogTableStageController implements Initializable{
 	private void setCellFactoryes(){
 		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
-		MySQLConnector connector = new MySQLConnector(sqlReadAllTradeLog);
+		H2DBConnector connector = new H2DBConnector(sqlReadAllTradeLog);
         dateColumn.setCellFactory(p -> {
 		    DatePickerTableCell datePick = new DatePickerTableCell(sqlReadAllTradeLog.recordList);
 		    return datePick;
@@ -147,7 +166,7 @@ public  class TradeLogTableStageController implements Initializable{
 		ArrayList<Integer> list = new ArrayList<>();
 		SQLReadAllBookInfo sqlReadAllbookInfo = new SQLReadAllBookInfo();
 		@SuppressWarnings("unused")
-		MySQLConnector connector = new MySQLConnector(sqlReadAllbookInfo);
+		H2DBConnector connector = new H2DBConnector(sqlReadAllbookInfo);
 		sqlReadAllbookInfo.recordList.forEach(e->{
 			list.add(e.securitiesCodeProperty().get());
 		});
@@ -209,7 +228,7 @@ public  class TradeLogTableStageController implements Initializable{
 			TradeLogRecord record = recordList.get(indexRow);
 			SQLDeleteTradeLog sqlDeleteTradeLog = new SQLDeleteTradeLog(record.idProperty().intValue());
 			@SuppressWarnings("unused")
-			MySQLConnector con = new MySQLConnector(sqlDeleteTradeLog);}
+			H2DBConnector con = new H2DBConnector(sqlDeleteTradeLog);}
 		catch(ArrayIndexOutOfBoundsException e){
 			System.out.println("Record is not selected.Please select any record.");
 		}
@@ -237,13 +256,13 @@ public  class TradeLogTableStageController implements Initializable{
 				record.sellingPriceProperty().intValue(),
 				record.sellingNumProperty().intValue());
 		@SuppressWarnings("unused")
-		MySQLConnector mySQLConnector = new MySQLConnector(sqlUpdateTradeLog);		
+		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);		
 	}
 
 	public void printRecord(){
 		SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
-		MySQLConnector mysqlConnector = new MySQLConnector(sqlReadAllTradeLog);
+		H2DBConnector mysqlConnector = new H2DBConnector(sqlReadAllTradeLog);
 		try{
 		for ( int i = 0; i<tableView.getItems().size(); i++) {
 			tableView.getItems().clear();
