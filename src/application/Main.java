@@ -1,12 +1,12 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sqlPublication.SQLCreateBookInfoTable;
 import sqlPublication.SQLCreateTradeLogTable;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {

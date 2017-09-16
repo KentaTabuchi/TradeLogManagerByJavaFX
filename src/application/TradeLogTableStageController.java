@@ -3,6 +3,8 @@
  */
 package application;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -17,8 +19,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -71,6 +73,18 @@ public  class TradeLogTableStageController implements Initializable{
 		System.out.println("starting onShowBookInfoTableWindowMenuClick was successed.");
 		this.createBoderPaneStage("BookInfoTableStage.fxml","BookInfoTableStage",100,100, 400, 500);
 	}
+	@FXML protected void onHelpMenuClick(ActionEvent evt){
+		System.out.println("starting onHelpMenuClick was successed.");
+		final File file = new File("./doc/help/index.html");
+		final Desktop  desktop =  Desktop.getDesktop() ;
+		try {
+			desktop.open(file);
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * @param fxmlFileName
 	 * @param posX  this is not absolute number,Input relative position from first Stage. 
