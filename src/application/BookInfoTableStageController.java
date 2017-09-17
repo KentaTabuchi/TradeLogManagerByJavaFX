@@ -15,6 +15,8 @@ import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import propertyBeans.BookInfoRecord;
 import propertyBeans.TradeLogRecord;
+import sqlPublication.SQLDeleteBookInfo;
+import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLUpdateBookInfo;
 
@@ -94,4 +96,21 @@ public class BookInfoTableStageController implements Initializable {
 			@SuppressWarnings("unused")
 			H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateBookInfo);		
 		}
+		@FXML protected void OnContextMenu_DeleteClick(){
+			System.out.println("OnContextMenu_DeleteClick Start");
+			int indexRow = this.tableView.getSelectionModel().getSelectedIndex();
+			System.out.println(indexRow);
+			ObservableList<BookInfoRecord> recordList = tableView.getItems();
+			try{
+				BookInfoRecord record = recordList.get(indexRow);
+				SQLDeleteBookInfo sqlDeleteBookInfo = new SQLDeleteBookInfo(record.securitiesCodeProperty().intValue());
+				@SuppressWarnings("unused")
+				H2DBConnector con = new H2DBConnector(sqlDeleteBookInfo);}
+			catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("Record is not selected.Please select any record.");
+			}
+			this.printRecord();
+		}
 }
+
+

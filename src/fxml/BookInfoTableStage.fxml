@@ -13,6 +13,13 @@
           <TableColumn fx:id="bookNameColumn" prefWidth="180.0" text="BOOK NAME " />
             <TableColumn fx:id="marcketColumn" onEditCommit="#onMarcketColumnCommit" prefWidth="85.0" text="MARCKET" />
         </columns>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#OnContextMenu_DeleteClick" text="DeleteRecord" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </TableView>
    </center>
    <top>

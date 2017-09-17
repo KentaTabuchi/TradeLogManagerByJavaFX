@@ -28,4 +28,6 @@ public class BookInfoRecord {
 		this.marcket = new SimpleStringProperty(marcket);
 	}
 
+
+
 }
