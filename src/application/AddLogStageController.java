@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import sqlPublication.SQLAddTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
@@ -21,6 +22,7 @@ public class AddLogStageController implements Initializable{
 	@FXML TextField purchaseNumText;
 	@FXML TextField sellingPriceText;
 	@FXML TextField sellingNumText;
+	@FXML TextArea memoArea;
 	
 	//ここにテキストボックスに入力されたデータを吸い上げてデータベースに書き込む処理を書く
 	@FXML protected void onAddButtonClick(ActionEvent evt){
@@ -38,7 +40,9 @@ public class AddLogStageController implements Initializable{
 									Integer.parseInt(this.purchasePriceText.getText()),
 									Integer.parseInt(this.purchaseNumText.getText()),
 									Integer.parseInt(this.sellingPriceText.getText()), 
-									Integer.parseInt(this.sellingNumText.getText()));
+									Integer.parseInt(this.sellingNumText.getText()),
+									this.memoArea.getText()
+									);
     	@SuppressWarnings("unused")
 		H2DBConnector mysqlConnector = new H2DBConnector(sqlExecutable);
 		TradeLogTableStageController controller;
