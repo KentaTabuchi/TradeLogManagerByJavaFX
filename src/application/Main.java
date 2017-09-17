@@ -22,7 +22,7 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			primaryStage.setWidth(900);
+			primaryStage.setWidth(1100);
 			primaryStage.setX(primaryStage.getX());
 			primaryStage.setTitle("TradeLogTableStage");
 			tradeLogTableStageController = fxmlLoader.getController();

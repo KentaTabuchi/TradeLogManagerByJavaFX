@@ -26,7 +26,7 @@ public class SQLCreateTradeLogTable implements ISQLExecutable {
 			+ "PURCHASE_NUMBER INT,"
 			+ "SELLING_PRICE INT,"
 			+ "SELLING_NUMBER INT,"
-			+ "MEMO VARCHAR(140))";
+			+ "MEMO VARCHAR(255))";
 	@Override
 	public void executeQuery(Connection con) {
 		System.out.println(this.SQL);

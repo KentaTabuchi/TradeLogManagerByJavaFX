@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -10,32 +11,55 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TradeLogTableStageController">
+<BorderPane prefHeight="575.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TradeLogTableStageController">
    <center>
-      <TableView id="tradeLogTable" fx:id="tableView" editable="true" prefHeight="403.0" prefWidth="1231.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="idColumn" prefWidth="41.0" text="ID" />
-          <TableColumn fx:id="codeColumn" onEditCommit="#onSecuritiesCodeColumnCommit" prefWidth="70.0" text="CODE" />
-            <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
-            <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
-            <TableColumn fx:id="dateColumn" onEditCommit="#onTradeDateColumnCommit" onEditStart="#onStart" prefWidth="152.0" text="DATE" />
-            <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="124.0" text="PURCHASE PRICE" />
-            <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="60.0" text="NUM" />
-            <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" prefWidth="113.0" text="SELLING PRICE" />
-            <TableColumn fx:id="sellingNumColumn" minWidth="0.0" onEditCommit="#onSellingNumberColumnCommit" prefWidth="43.0" text="NUM" />
-            <TableColumn fx:id="memoColumn" prefWidth="414.0" text="MEMO" />
-        </columns>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#onContextMenuRequested" text="Delete Selection Record" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
-      </TableView>
+      <VBox prefHeight="340.0" prefWidth="2224.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView id="tradeLogTable" fx:id="tableView" editable="true" onMouseClicked="#onMouseClicked" prefHeight="611.0" prefWidth="966.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="41.0" text="ID" visible="false" />
+                <TableColumn fx:id="codeColumn" onEditCommit="#onSecuritiesCodeColumnCommit" prefWidth="70.0" text="CODE" />
+                  <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
+                  <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
+                  <TableColumn fx:id="dateColumn" onEditCommit="#onTradeDateColumnCommit" onEditStart="#onStart" prefWidth="152.0" text="DATE" />
+                  <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="118.0" text="PURCHASE PRICE" />
+                  <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="66.0" text="NUM" />
+                  <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" prefWidth="113.0" text="SELLING PRICE" />
+                  <TableColumn fx:id="sellingNumColumn" minWidth="0.0" onEditCommit="#onSellingNumberColumnCommit" prefWidth="43.0" text="NUM" />
+                  <TableColumn fx:id="memoColumn" prefWidth="300.0" text="MEMO" />
+              </columns>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onContextMenuRequested" text="Delete Selection Record" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TableView>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onAction" text="UpdateMemo">
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Label fx:id="idCountText" text="countText">
+                     <HBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <TextArea fx:id="memoArea" onKeyTyped="#onKeyTyped" prefHeight="200.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </TextArea>
+         </children>
+      </VBox>
    </center>
    <top>
-      <MenuBar layoutX="-200.0">
+      <MenuBar prefHeight="23.0" prefWidth="1007.0" BorderPane.alignment="CENTER">
         <menus>
             <Menu mnemonicParsing="false" text="Table">
               <items>

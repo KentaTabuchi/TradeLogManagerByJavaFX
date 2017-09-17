@@ -21,9 +21,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -34,6 +36,7 @@ import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLReadAllTradeLog;
+import sqlPublication.SQLUpdateMemo;
 import sqlPublication.SQLUpdateTradeLog;
 
 /**
@@ -41,6 +44,7 @@ import sqlPublication.SQLUpdateTradeLog;
  *
  */
 public  class TradeLogTableStageController implements Initializable{
+	private static final int MAX_CHARCTER_COUNTS_IN_MEMO = 255; 
 	@FXML private TableView<TradeLogRecord> tableView;
 	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn idColumn;
@@ -62,6 +66,8 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableColumn sellingNumColumn;
 	@SuppressWarnings("rawtypes")
 	@FXML private TableColumn memoColumn;
+	@FXML private TextArea memoArea;
+	@FXML private Label idCountText;
 	
 
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
@@ -240,6 +246,36 @@ public  class TradeLogTableStageController implements Initializable{
 		this.printRecord();
 	}
 
+	@FXML protected void onMouseClicked(){
+		System.out.println("onMouseClicked");
+		int indexRow = this.tableView.getSelectionModel().getSelectedIndex();
+		ObservableList<TradeLogRecord> recordList = tableView.getItems();
+		TradeLogRecord record = recordList.get(indexRow);
+		String memo = record.memoProperty().getValue();
+		System.out.println(memo);
+		this.memoArea.setText(memo);
+	}
+	@FXML protected void onAction(){
+		System.out.println("onButtonClicked");
+		if(this.memoArea.getText().length()>MAX_CHARCTER_COUNTS_IN_MEMO){
+			System.out.println("too many char.plese write" +  MAX_CHARCTER_COUNTS_IN_MEMO + "chars.");
+		}
+		int indexRow = this.tableView.getSelectionModel().getSelectedIndex();
+		ObservableList<TradeLogRecord> recordList = tableView.getItems();
+		TradeLogRecord record = recordList.get(indexRow);
+		ISQLExecutable sqlUpdateMemo = new SQLUpdateMemo(
+				record.idProperty().intValue(),
+				memoArea.getText());
+		@SuppressWarnings("unused")
+		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateMemo);	
+		this.printRecord();
+	}
+	@FXML protected void onKeyTyped(){
+		System.out.println("onKeyTyped");
+		int length = this.memoArea.getText().length();
+		this.idCountText.setText(String.valueOf(length) + "/" + MAX_CHARCTER_COUNTS_IN_MEMO);
+		
+	}
 	private void updateRecord(){
 		int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
 
