@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project TradeLogger with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR file Export Wizard-->
+    <!--ANT 1.7 is required-->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="${dir.buildfile}/.."/>
+    <property name="dir.jarfile" value="${dir.buildfile}"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/TradeLogger.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="application.Main"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ org.eclipse.fx.ide.css.jfx8_1.0.0.201408150702.jar mysql-connector-java-5.1.44-bin.jar h2-1.4.192.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="${dir.jarfile}/bin"/>
+            <zipfileset dir="/Applications/Eclipse.app/Contents/Eclipse/plugins" includes="org.eclipse.fx.ide.css.jfx8_1.0.0.201408150702.jar"/>
+            <zipfileset dir="${dir.jarfile}/DBdriver" includes="mysql-connector-java-5.1.44-bin.jar"/>
+            <zipfileset dir="/Applications/h2/bin" includes="h2-1.4.192.jar"/>
+        </jar>
+    </target>
+</project>

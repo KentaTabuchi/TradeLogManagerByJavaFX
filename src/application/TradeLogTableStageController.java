@@ -84,16 +84,7 @@ public  class TradeLogTableStageController implements Initializable{
 	}
 	@FXML protected void onHelpMenuClick(ActionEvent evt){
 		System.out.println("starting onHelpMenuClick was successed.");
-
-		final File file = new File("doc/help/index.html");
-		final Desktop  desktop =  Desktop.getDesktop() ;
-		System.out.println(file.getPath());
-		try {
-			desktop.open(file);
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
+		this.createBoderPaneStage("HelpStage.fxml", "HelpStage", 0, 0, 800, 600);
 	}
 	
 	/**

@@ -16,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import propertyBeans.BookInfoRecord;
 import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLDeleteBookInfo;
-import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLUpdateBookInfo;
 
