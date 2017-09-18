@@ -19,7 +19,7 @@ public class SQLCreateBookInfoTable implements ISQLExecutable {
 	 */
 
 	final String SQL = "CREATE TABLE BOOK_INFO("
-			+ "SECURITIES_CODE INT,"
+			+ "SECURITIES_CODE INT PRIMARY KEY,"
 			+ "BOOK_NAME VARCHAR(40),"
 			+ "MARCKET VARCHAR(20))";
 

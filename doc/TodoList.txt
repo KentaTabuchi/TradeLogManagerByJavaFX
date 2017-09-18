@@ -1,2 +1,2 @@
-BOOK_NAME カラムのセル編集をComboboxでBOOK_INFOテーブルから選択できるようにする。
-DatePickerをセルに使えるようにTableCellをextendする
+取引記録を月ごとに表示できるようにする。
+AddBookInfoStageとBookInfoTableStageを統合する
