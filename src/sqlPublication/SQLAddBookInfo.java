@@ -20,7 +20,7 @@ public class SQLAddBookInfo implements ISQLExecutable {
 	private int securitiesCode;
 	private String bookName;
 	private String marcket;
-	
+	public boolean isError = false;
 	final String SQL = "INSERT INTO BOOK_INFO ("
 			+ "SECURITIES_CODE,"//1
 			+ "BOOK_NAME,"//2
@@ -52,6 +52,7 @@ public class SQLAddBookInfo implements ISQLExecutable {
 			} catch (Exception e) {
 			System.out.println("SQL failed.Please check SQL syntax or exiting Table,columnse");
 			e.printStackTrace();
+			this.isError = true;
 			}
 	}
 }

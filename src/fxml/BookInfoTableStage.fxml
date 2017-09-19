@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,11 +8,11 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BookInfoTableStageController">
    <center>
-      <TableView fx:id="tableView" editable="true" prefHeight="200.0" prefWidth="348.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" editable="true" prefHeight="289.0" prefWidth="334.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="codeColumn" text="CODE" />
           <TableColumn fx:id="bookNameColumn" prefWidth="180.0" text="BOOK NAME " />
-            <TableColumn fx:id="marcketColumn" onEditCommit="#onMarcketColumnCommit" prefWidth="85.0" text="MARCKET" />
+            <TableColumn fx:id="marcketColumn" onEditCommit="#onMarcketColumnCommit" prefWidth="97.0" text="MARCKET" />
         </columns>
          <contextMenu>
             <ContextMenu>
@@ -48,4 +49,23 @@
         </menus>
       </MenuBar>
    </top>
+   <bottom>
+      <VBox prefHeight="65.0" prefWidth="348.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onAddBookInfoButtonClick" text="Add new book record">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <HBox prefHeight="55.0" prefWidth="348.0">
+               <children>
+                  <TextField fx:id="codeText" prefHeight="27.0" prefWidth="80.0" promptText="code" />
+                  <TextField fx:id="bookNameText" prefWidth="180.0" promptText="bookname" />
+                  <ComboBox fx:id="marcketCombo" prefHeight="27.0" prefWidth="97.0" promptText="market" />
+               </children>
+            </HBox>
+            <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="348.0" text="---" />
+         </children>
+      </VBox>
+   </bottom>
 </BorderPane>

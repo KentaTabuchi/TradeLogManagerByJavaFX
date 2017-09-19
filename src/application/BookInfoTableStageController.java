@@ -4,17 +4,23 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.h2.jdbc.JdbcSQLException;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import propertyBeans.BookInfoRecord;
 import propertyBeans.TradeLogRecord;
+import sqlPublication.SQLAddBookInfo;
 import sqlPublication.SQLDeleteBookInfo;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLUpdateBookInfo;
@@ -27,6 +33,11 @@ public class BookInfoTableStageController implements Initializable {
 	@FXML private TableColumn bookNameColumn;
     @SuppressWarnings("rawtypes")
 	@FXML private TableColumn marcketColumn;
+    
+    @FXML private TextField codeText;
+    @FXML private TextField bookNameText;
+    @FXML private ComboBox<Marcket> marcketCombo;
+    @FXML private Label statusLabel;
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -35,12 +46,11 @@ public class BookInfoTableStageController implements Initializable {
 		  //TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
 		
 			marcketColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.marcketNameList().toArray()));
-			
 			codeColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("securitiesCode"));
 	        bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("bookName"));
 	        marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
 	        
-	        
+			this.marcketCombo.getItems().addAll((Marcket.values()));
 		this.printRecord();
 	}
 		private ArrayList<String> marcketNameList(){
@@ -110,6 +120,24 @@ public class BookInfoTableStageController implements Initializable {
 			}
 			this.printRecord();
 		}
+		@FXML protected void onAddBookInfoButtonClick(ActionEvent evt){
+			
+			System.out.println("AddButton was Clicked");
+			System.out.println(this.codeText.getText());
+			System.out.println(this.bookNameText.getText());
+			System.out.println(this.marcketCombo.getValue().toString());
+			SQLAddBookInfo sqlAddBookInfo = 
+					new SQLAddBookInfo( Integer.parseInt(this.codeText.getText()),
+										this.bookNameText.getText(),
+										this.marcketCombo.getValue().toString());
+	    	@SuppressWarnings("unused")
+			H2DBConnector mysqlConnector = new H2DBConnector(sqlAddBookInfo);
+	    	if(sqlAddBookInfo.isError){
+	    		this.statusLabel.setText("Please Don't input same code as you aleady inputed.");
+	    	}
+	    	this.printRecord();
+		}
+
 }
 
 
