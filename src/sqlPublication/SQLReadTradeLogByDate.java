@@ -18,13 +18,22 @@ import propertyBeans.TradeLogRecord;
  * @author misskabu
  * TRADE_LOG TABLE から　読み出したデータを表に表示するためのSQL
  */
-public class SQLReadAllTradeLog implements ISQLExecutable {
+public class SQLReadTradeLogByDate implements ISQLExecutable {
 
 	/* (非 Javadoc)
 	 * @see application.ISQLExcutable#excuteQuery()
 	 */
+	private int year;
+	private int month;
 	public List<TradeLogRecord> recordList;
-	final String SQL = "SELECT * FROM TRADE_LOG LEFT JOIN BOOK_INFO ON TRADE_LOG.SECURITIES_CODE = BOOK_INFO.SECURITIES_CODE ORDER BY TRADE_DATE";
+	
+	public SQLReadTradeLogByDate(int year,int month){
+		this.year = year;
+		this.month = month;
+	}
+	
+	final String SQL = "SELECT * FROM TRADE_LOG LEFT JOIN BOOK_INFO ON TRADE_LOG.SECURITIES_CODE ="
+			+ " BOOK_INFO.SECURITIES_CODE WHERE YEAR(TRADE_DATE) = ? AND MONTH(TRADE_DATE) = ? ORDER BY TRADE_DATE";
 	@Override
 	public void executeQuery(Connection con) {
 		this.recordList = new ArrayList<TradeLogRecord>();
@@ -37,6 +46,8 @@ public class SQLReadAllTradeLog implements ISQLExecutable {
 		}
 		ResultSet rs = null;
 		try {
+			ps.setInt(1,this.year);
+			ps.setInt(2,this.month);
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック

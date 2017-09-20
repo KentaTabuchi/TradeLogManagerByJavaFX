@@ -3,39 +3,37 @@
  */
 package application;
 
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import customControl.DatePickerTableCell;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLReadAllTradeLog;
+import sqlPublication.SQLReadTradeLogByDate;
 import sqlPublication.SQLUpdateMemo;
 import sqlPublication.SQLUpdateTradeLog;
 
@@ -68,6 +66,8 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableColumn memoColumn;
 	@FXML private TextArea memoArea;
 	@FXML private Label idCountText;
+	@FXML private TextField yearText;
+	@FXML private ChoiceBox<Integer> monthChoice;
 	
 
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
@@ -127,21 +127,25 @@ public  class TradeLogTableStageController implements Initializable{
 		this.setCellValueFactoryes();
 		this.setCellFactoryes();
 		this.printRecord();
-
+		this.setMonthChoice();
+	}
+	private void setMonthChoice(){
+		monthChoice.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12);
 	}
 	/**
 	 * setCellFactory Method make a column Editable. 
 	 * dateColumn.setCellFactory(DatePickerTableCell.setTableColumn(dateColumn);
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	private void setCellFactoryes(){
 		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
 		H2DBConnector connector = new H2DBConnector(sqlReadAllTradeLog);
-        dateColumn.setCellFactory(p -> {
+        /**dateColumn.setCellFactory(p -> {
 		    DatePickerTableCell datePick = new DatePickerTableCell(sqlReadAllTradeLog.recordList);
 		    return datePick;
-		});
+		});*/
+		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
 		codeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.getSecuritiesCodeList().toArray()));
 		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -155,7 +159,7 @@ public  class TradeLogTableStageController implements Initializable{
 		//引数の"id","date"などの文字列がPropertyBeansクラスのTradeLogRecordのprivate変数名と完全一致させると
 		//TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
 		idColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("id"));
-		dateColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("date"));
+		dateColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Date>("date"));
 		codeColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("code"));
 		bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("name"));
 		marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
@@ -187,15 +191,7 @@ public  class TradeLogTableStageController implements Initializable{
 		System.out.println("start");
 	}
 	@FXML protected void onTradeDateColumnCommit(CellEditEvent<TradeLogRecord,Date> event){
-		System.out.println("onTradeDateColumnCommit Start");
 
-		try{event.getRowValue().setDateProperty((event.getNewValue()));}
-		catch(IllegalArgumentException e){
-			System.out.println("Input failed.Please input correct Date");
-			Alert alert = new Alert(AlertType.ERROR,"Please input correct Date",ButtonType.OK);
-			alert.show();
-		}
-		this.updateRecord();
 	}
 	@FXML protected void onSecuritiesCodeColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
 		System.out.println("onSecuritiesCodeColumnCommit Start");
@@ -269,6 +265,12 @@ public  class TradeLogTableStageController implements Initializable{
 		this.idCountText.setText(String.valueOf(length) + "/" + MAX_CHARCTER_COUNTS_IN_MEMO);
 		
 	}
+	@FXML protected void onFilterButtonClicked(){
+		System.out.println("onFilterButtonClicked");
+		System.out.println(yearText.getText());
+		System.out.println(monthChoice.getValue());
+		this.printRecord(Integer.valueOf(yearText.getText()), monthChoice.getValue().intValue());
+	}
 	private void updateRecord(){
 		int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
 
@@ -292,7 +294,30 @@ public  class TradeLogTableStageController implements Initializable{
 		@SuppressWarnings("unused")
 		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);		
 	}
-
+	public void printRecord(int year,int month){
+		SQLReadTradeLogByDate sqlTradeLogByDate = new SQLReadTradeLogByDate(year,month);
+		@SuppressWarnings("unused")
+		H2DBConnector mysqlConnector = new H2DBConnector(sqlTradeLogByDate);
+		try{
+		for ( int i = 0; i<tableView.getItems().size(); i++) {
+			tableView.getItems().clear();
+		}}catch(IndexOutOfBoundsException e){
+			System.out.println("IndexOutOfBoudsException. please check look counter in the printrecord");
+		}
+		sqlTradeLogByDate.recordList.forEach(e->{
+			this.tableView.getItems().add(new TradeLogRecord(
+					e.idProperty().get(),
+					e.dateProperty().get(),
+					e.codeProperty().get(),
+					e.nameProperty().get(),
+					e.marcketProperty().get(),
+					e.purchasePriceProperty().get(),
+					e.purchaseNumProperty().get(), 
+					e.sellingPriceProperty().get(), 
+					e.sellingNumProperty().get(),
+					e.memoProperty().get()));
+		});
+	}
 	public void printRecord(){
 		SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")

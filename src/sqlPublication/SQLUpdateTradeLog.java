@@ -55,6 +55,7 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 	}
 	@Override
 	public void executeQuery(Connection con) {
+		
 		System.out.println(this.SQL);
 			try(PreparedStatement ps = con.prepareStatement(this.SQL)){
 			ps.setDate(1,this.tradeDate);

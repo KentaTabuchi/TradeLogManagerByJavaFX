@@ -116,26 +116,28 @@ public class DatePickerTableCell<S, T> extends TableCell<TradeLogRecord, Date> {
     }
     @Override
     public void commitEdit(Date date){
-    	super.commitEdit(date);
-    	System.out.println("datePickerEdited");
-    	int indexRow = getIndex();
-		List<TradeLogRecord> recordList=null;
-		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
-		@SuppressWarnings("unused")
-		H2DBConnector con = new H2DBConnector(sqlReadAllTradeLog);
-		recordList = sqlReadAllTradeLog.recordList;
-		TradeLogRecord record = recordList.get(indexRow);
+    		System.out.println("isDataColumnEditable = true");
+    		super.commitEdit(date);
+    		System.out.println("datePickerEdited");
+    		int indexRow = getIndex();
+    		List<TradeLogRecord> recordList=null;
+    		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
+    		@SuppressWarnings("unused")
+    		H2DBConnector con = new H2DBConnector(sqlReadAllTradeLog);
+    		recordList = sqlReadAllTradeLog.recordList;
+    		TradeLogRecord record = recordList.get(indexRow);
 
-		ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
-				record.idProperty().intValue(),
-				new java.sql.Date(date.getTime()),
-				record.codeProperty().intValue(),
-				record.purchasePriceProperty().intValue(),
-				record.purchaseNumProperty().intValue(),
-				record.sellingPriceProperty().intValue(),
-				record.sellingNumProperty().intValue());
-		@SuppressWarnings("unused")
-		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);	
+    		ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
+    				record.idProperty().intValue(),
+    				new java.sql.Date(date.getTime()),
+    				record.codeProperty().intValue(),
+    				record.purchasePriceProperty().intValue(),
+    				record.purchaseNumProperty().intValue(),
+    				record.sellingPriceProperty().intValue(),
+    				record.sellingNumProperty().intValue());
+    		@SuppressWarnings("unused")
+    		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);
+    	
     }
     
     public ArrayList<TradeLogRecord> getTradeLogRecord() {

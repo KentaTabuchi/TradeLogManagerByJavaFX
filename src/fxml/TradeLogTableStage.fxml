@@ -15,13 +15,26 @@
    <center>
       <VBox prefHeight="340.0" prefWidth="2224.0" BorderPane.alignment="CENTER">
          <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="month" />
+                  <ChoiceBox fx:id="monthChoice" prefHeight="27.0" prefWidth="80.0" />
+                  <Label text=" /year " />
+                  <TextField fx:id="yearText" prefHeight="27.0" prefWidth="87.0" />
+                  <Button mnemonicParsing="false" onAction="#onFilterButtonClicked" text="Filter">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             <TableView id="tradeLogTable" fx:id="tableView" editable="true" onMouseClicked="#onMouseClicked" prefHeight="611.0" prefWidth="966.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="41.0" text="ID" visible="false" />
                 <TableColumn fx:id="codeColumn" onEditCommit="#onSecuritiesCodeColumnCommit" prefWidth="70.0" text="CODE" />
                   <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
                   <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
-                  <TableColumn fx:id="dateColumn" onEditCommit="#onTradeDateColumnCommit" onEditStart="#onStart" prefWidth="152.0" text="DATE" />
+                  <TableColumn fx:id="dateColumn" editable="false" prefWidth="152.0" text="DATE" />
                   <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="118.0" text="PURCHASE PRICE" />
                   <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="66.0" text="NUM" />
                   <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" prefWidth="113.0" text="SELLING PRICE" />
