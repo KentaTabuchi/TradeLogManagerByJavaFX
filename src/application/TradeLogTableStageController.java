@@ -6,6 +6,7 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -128,10 +129,15 @@ public  class TradeLogTableStageController implements Initializable{
 		this.setCellFactoryes();
 		this.printRecord();
 		this.setMonthChoice();
+		
+		LocalDateTime dateTime = LocalDateTime.now();
+		this.yearText.setText(String.valueOf(dateTime.getYear()));
+		this.monthChoice.setValue(dateTime.getMonthValue());
 	}
 	private void setMonthChoice(){
 		monthChoice.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12);
 	}
+
 	/**
 	 * setCellFactory Method make a column Editable. 
 	 * dateColumn.setCellFactory(DatePickerTableCell.setTableColumn(dateColumn);

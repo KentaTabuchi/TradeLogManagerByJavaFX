@@ -1,5 +1,7 @@
 package test;
 
+import java.time.LocalDateTime;
+
 import application.H2DBConnector;
 import application.ISQLExecutable;
 import sqlPublication.SQLCreateTradeLogTable;
@@ -13,8 +15,8 @@ public class Tester {
 		 */
 		@SuppressWarnings("unused")
 		public static void main(String[] args) {
-			//ISQLExecutable sqlExecutable= new SQLDropTradeLogTable();
-			ISQLExecutable sqlExecutable= new SQLCreateTradeLogTable();
-	    	H2DBConnector mysqlConnector = new H2DBConnector(sqlExecutable);
+			LocalDateTime date = LocalDateTime.now();
+			System.out.println(date.getYear());
+			System.out.println(date.getMonthValue());
 	    }
 }
