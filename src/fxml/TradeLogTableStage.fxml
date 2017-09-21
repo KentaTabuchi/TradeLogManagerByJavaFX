@@ -21,11 +21,17 @@
                   <ChoiceBox fx:id="monthChoice" prefHeight="27.0" prefWidth="80.0" />
                   <Label text=" /year " />
                   <TextField fx:id="yearText" prefHeight="27.0" prefWidth="87.0" />
-                  <Button mnemonicParsing="false" onAction="#onFilterButtonClicked" text="Filter">
+                  <Button mnemonicParsing="false" onAction="#onFilterByDateButtonClicked" text="Filter by DATE">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <ComboBox fx:id="codeCombo" prefWidth="150.0">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
-                  </Button>
+                  </ComboBox>
+                  <Button mnemonicParsing="false" onAction="#onFilterByCodeButtonClicked" text="Filter by CODE" />
                </children>
             </HBox>
             <TableView id="tradeLogTable" fx:id="tableView" editable="true" onMouseClicked="#onMouseClicked" prefHeight="611.0" prefWidth="966.0">

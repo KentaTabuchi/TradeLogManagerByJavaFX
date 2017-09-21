@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -34,6 +35,7 @@ import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLReadAllTradeLog;
+import sqlPublication.SQLReadTradeLogByCode;
 import sqlPublication.SQLReadTradeLogByDate;
 import sqlPublication.SQLUpdateMemo;
 import sqlPublication.SQLUpdateTradeLog;
@@ -69,7 +71,7 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private Label idCountText;
 	@FXML private TextField yearText;
 	@FXML private ChoiceBox<Integer> monthChoice;
-	
+	@FXML private ComboBox<Integer> codeCombo;
 
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddLogWindowMenuClick was successed.");
@@ -128,14 +130,18 @@ public  class TradeLogTableStageController implements Initializable{
 		this.setCellValueFactoryes();
 		this.setCellFactoryes();
 		this.printRecord();
-		this.setMonthChoice();
+		this.initializeMonthChoice();
+		this.initializeCodeCombo();
 		
 		LocalDateTime dateTime = LocalDateTime.now();
 		this.yearText.setText(String.valueOf(dateTime.getYear()));
 		this.monthChoice.setValue(dateTime.getMonthValue());
 	}
-	private void setMonthChoice(){
+	private void initializeMonthChoice(){
 		monthChoice.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12);
+	}
+	private void initializeCodeCombo(){
+		this.codeCombo.getItems().addAll(getSecuritiesCodeList());
 	}
 
 	/**
@@ -271,11 +277,16 @@ public  class TradeLogTableStageController implements Initializable{
 		this.idCountText.setText(String.valueOf(length) + "/" + MAX_CHARCTER_COUNTS_IN_MEMO);
 		
 	}
-	@FXML protected void onFilterButtonClicked(){
-		System.out.println("onFilterButtonClicked");
+	@FXML protected void onFilterByDateButtonClicked(){
+		System.out.println("onFilterByDateButtonClicked");
 		System.out.println(yearText.getText());
 		System.out.println(monthChoice.getValue());
 		this.printRecord(Integer.valueOf(yearText.getText()), monthChoice.getValue().intValue());
+	}
+	@FXML protected void onFilterByCodeButtonClicked(){
+		System.out.println("onFilterByDateButtonClicked");
+		System.out.println(this.codeCombo.getValue());
+		this.printRecord(this.codeCombo.getValue());
 	}
 	private void updateRecord(){
 		int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
@@ -299,6 +310,30 @@ public  class TradeLogTableStageController implements Initializable{
 				record.sellingNumProperty().intValue());
 		@SuppressWarnings("unused")
 		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);		
+	}
+	public void printRecord(int code){
+		SQLReadTradeLogByCode sqlTradeLogByCode = new SQLReadTradeLogByCode(code);
+		@SuppressWarnings("unused")
+		H2DBConnector mysqlConnector = new H2DBConnector(sqlTradeLogByCode);
+		try{
+		for ( int i = 0; i<tableView.getItems().size(); i++) {
+			tableView.getItems().clear();
+		}}catch(IndexOutOfBoundsException e){
+			System.out.println("IndexOutOfBoudsException. please check look counter in the printrecord");
+		}
+		sqlTradeLogByCode.recordList.forEach(e->{
+			this.tableView.getItems().add(new TradeLogRecord(
+					e.idProperty().get(),
+					e.dateProperty().get(),
+					e.codeProperty().get(),
+					e.nameProperty().get(),
+					e.marcketProperty().get(),
+					e.purchasePriceProperty().get(),
+					e.purchaseNumProperty().get(), 
+					e.sellingPriceProperty().get(), 
+					e.sellingNumProperty().get(),
+					e.memoProperty().get()));
+		});
 	}
 	public void printRecord(int year,int month){
 		SQLReadTradeLogByDate sqlTradeLogByDate = new SQLReadTradeLogByDate(year,month);
