@@ -26,12 +26,6 @@
          </children>
       </HBox>
    </bottom>
-   <top>
-      <Label text="Please input follow data to add new record" textFill="#833333" BorderPane.alignment="CENTER">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor></Label>
-   </top>
    <left>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -49,19 +43,19 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Code" GridPane.rowIndex="1" />
-                  <Label text="PurchasePrice" GridPane.rowIndex="2" />
+                  <Label styleClass="labels" text="Code" GridPane.rowIndex="1" />
+                  <Label styleClass="labels" text="PurchasePrice" GridPane.rowIndex="2" />
                   <TextField fx:id="purchasePriceText" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Date">
+                  <Label styleClass="labels" text="Date">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
                   <TextField fx:id="purchaseNumText" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="sellingPriceText" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="PurchaseNum" GridPane.rowIndex="3" />
-                  <Label text="SellingPrice" GridPane.rowIndex="4" />
-                  <Label text="SellingNum" GridPane.rowIndex="5" />
+                  <Label styleClass="labels" text="PurchaseNum" GridPane.rowIndex="3" />
+                  <Label styleClass="labels" text="SellingPrice" GridPane.rowIndex="4" />
+                  <Label styleClass="labels" text="SellingNum" GridPane.rowIndex="5" />
                   <TextField fx:id="sellingNumText" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <DatePicker fx:id="datePicker" GridPane.columnIndex="1" />
                   <ComboBox fx:id="codeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -73,7 +67,7 @@
    <center>
       <VBox prefHeight="287.0" prefWidth="326.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Memo">
+            <Label styleClass="labels" text="Memo">
                <VBox.margin>
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>

@@ -17,9 +17,9 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="month" />
+                  <Label styleClass="labels" text="month" />
                   <ChoiceBox fx:id="monthChoice" prefHeight="27.0" prefWidth="80.0" />
-                  <Label text=" /year " />
+                  <Label styleClass="labels" text=" /year " />
                   <TextField fx:id="yearText" prefHeight="27.0" prefWidth="87.0" />
                   <Button mnemonicParsing="false" onAction="#onFilterByDateButtonClicked" text="Filter by DATE">
                      <HBox.margin>
@@ -62,7 +62,7 @@
                         <Insets left="10.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Label fx:id="idCountText" text="countText">
+                  <Label fx:id="idCountText" styleClass="labels" text="countText">
                      <HBox.margin>
                         <Insets left="10.0" top="5.0" />
                      </HBox.margin>
