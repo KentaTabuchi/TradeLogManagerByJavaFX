@@ -47,32 +47,21 @@ import sqlPublication.SQLUpdateTradeLog;
 public  class TradeLogTableStageController implements Initializable{
 	private static final int MAX_CHARCTER_COUNTS_IN_MEMO = 255; 
 	@FXML private TableView<TradeLogRecord> tableView;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn idColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn dateColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn codeColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn bookNameColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn marcketColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn purchasePriceColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn purchaseNumColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn sellingPriceColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn sellingNumColumn;
-	@SuppressWarnings("rawtypes")
-	@FXML private TableColumn memoColumn;
+	@FXML private TableColumn<TradeLogRecord,Integer> idColumn;
+	@FXML private TableColumn <Object,java.util.Date>dateColumn;
+	@FXML private TableColumn<Object,Object> codeColumn;
+	@FXML private TableColumn<TradeLogRecord,String> bookNameColumn;
+	@FXML private TableColumn<TradeLogRecord,String> marcketColumn;
+	@FXML private TableColumn<TradeLogRecord,Integer> purchasePriceColumn;
+	@FXML private TableColumn<TradeLogRecord,Integer> purchaseNumColumn;
+	@FXML private TableColumn<TradeLogRecord,Integer> sellingPriceColumn;
+	@FXML private TableColumn<TradeLogRecord,Integer> sellingNumColumn;
+	@FXML private TableColumn<TradeLogRecord, String> memoColumn;
 	@FXML private TextArea memoArea;
 	@FXML private Label idCountText;
 	@FXML private TextField yearText;
 	@FXML private ChoiceBox<Integer> monthChoice;
 	@FXML private ComboBox<Integer> codeCombo;
-
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddLogWindowMenuClick was successed.");
 		this.createBoderPaneStage("AddLogStage.fxml","AddLogStage",350,0, 400, 400);
@@ -148,7 +137,7 @@ public  class TradeLogTableStageController implements Initializable{
 	 * setCellFactory Method make a column Editable. 
 	 * dateColumn.setCellFactory(DatePickerTableCell.setTableColumn(dateColumn);
 	 */
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings({ })
 	private void setCellFactoryes(){
 		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
@@ -166,13 +155,12 @@ public  class TradeLogTableStageController implements Initializable{
 		memoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		
 	}
-	@SuppressWarnings("unchecked")
 	private void setCellValueFactoryes(){
 		//引数の"id","date"などの文字列がPropertyBeansクラスのTradeLogRecordのprivate変数名と完全一致させると
 		//TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
 		idColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("id"));
-		dateColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Date>("date"));
-		codeColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("code"));
+		dateColumn.setCellValueFactory(new PropertyValueFactory<Object,java.util.Date>("date"));
+		codeColumn.setCellValueFactory(new PropertyValueFactory<Object,Object>("code"));
 		bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("name"));
 		marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
 		purchasePriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchasePrice"));

@@ -11,6 +11,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.CurrencyStringConverter;
 import sqlPublication.SQLAddTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 
@@ -37,9 +39,9 @@ public class AddLogStageController implements Initializable{
 				new SQLAddTradeLog(	
 									java.sql.Date.valueOf(this.datePicker.getValue()),
 									Integer.parseInt(this.codeCombo.getValue().toString()),
-									Integer.parseInt(this.purchasePriceText.getText()),
+									Integer.parseInt(this.purchasePriceText.getTextFormatter().getValue().toString()),
 									Integer.parseInt(this.purchaseNumText.getText()),
-									Integer.parseInt(this.sellingPriceText.getText()), 
+									Integer.parseInt(this.sellingPriceText.getTextFormatter().getValue().toString()), 
 									Integer.parseInt(this.sellingNumText.getText()),
 									this.memoArea.getText()
 									);
@@ -65,5 +67,18 @@ public class AddLogStageController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.codeCombo.getItems().addAll((this.getSecuritiesCodeList()));
+		this.setTextFormatter();
 	}
+	private void setTextFormatter(){
+		CurrencyStringConverter converter = new CurrencyStringConverter();
+		TextFormatter<Number> formatter1 = new TextFormatter<>(converter);
+		TextFormatter<Number> formatter2 = new TextFormatter<>(converter);
+		
+		this.purchasePriceText.setTextFormatter(formatter1);
+		this.sellingPriceText.setTextFormatter(formatter2);
+		formatter1.setValue(0);
+		formatter2.setValue(0);
+		
+	}
+
 }

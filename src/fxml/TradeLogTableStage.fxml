@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -31,7 +32,10 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </ComboBox>
-                  <Button mnemonicParsing="false" onAction="#onFilterByCodeButtonClicked" text="Filter by CODE" />
+                  <Button mnemonicParsing="false" onAction="#onFilterByCodeButtonClicked" text="Filter by CODE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Button>
                </children>
             </HBox>
             <TableView id="tradeLogTable" fx:id="tableView" editable="true" onMouseClicked="#onMouseClicked" prefHeight="611.0" prefWidth="966.0">
