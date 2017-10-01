@@ -41,15 +41,23 @@
             <TableView id="tradeLogTable" fx:id="tableView" editable="true" onMouseClicked="#onMouseClicked" prefHeight="611.0" prefWidth="966.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="41.0" text="ID" visible="false" />
-                <TableColumn fx:id="codeColumn" onEditCommit="#onSecuritiesCodeColumnCommit" prefWidth="70.0" text="CODE" />
-                  <TableColumn fx:id="bookNameColumn" prefWidth="132.0" text="BOOK NAME" />
+                <TableColumn fx:id="codeColumn" onEditCommit="#onSecuritiesCodeColumnCommit" prefWidth="53.0" text="CODE" />
+                  <TableColumn fx:id="bookNameColumn" prefWidth="149.0" text="BOOK NAME" />
                   <TableColumn fx:id="marcketColumn" prefWidth="77.0" text="MARCKET" />
-                  <TableColumn fx:id="dateColumn" editable="false" prefWidth="152.0" text="DATE" />
-                  <TableColumn fx:id="purchasePriceColumn" onEditCommit="#onPurchasePriceColumnCommit" prefWidth="118.0" text="PURCHASE PRICE" />
-                  <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="66.0" text="NUM" />
-                  <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" prefWidth="113.0" text="SELLING PRICE" />
-                  <TableColumn fx:id="sellingNumColumn" minWidth="0.0" onEditCommit="#onSellingNumberColumnCommit" prefWidth="43.0" text="NUM" />
-                  <TableColumn fx:id="memoColumn" prefWidth="300.0" text="MEMO" />
+                  <TableColumn fx:id="dateColumn" editable="false" prefWidth="89.0" text="DATE" />
+                  <TableColumn prefWidth="139.0" resizable="false" text="PURCHASE">
+                     <columns>
+                        <TableColumn fx:id="purchasePriceColumn" maxWidth="4500.0" onEditCommit="#onPurchasePriceColumnCommit" resizable="false" styleClass="number-column" text="PRICE" />
+                        <TableColumn fx:id="purchaseNumColumn" onEditCommit="#onPurchaseNumberColumnCommit" prefWidth="55.0" resizable="false" styleClass="number-column" text="NUM" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn maxWidth="4500.0" prefWidth="161.0" resizable="false" text="SELLING">
+                     <columns>
+                        <TableColumn fx:id="sellingPriceColumn" onEditCommit="#onSellingPriceColumnCommit" resizable="false" styleClass="number-column" text="PRICE" />
+                        <TableColumn fx:id="sellingNumColumn" minWidth="0.0" onEditCommit="#onSellingNumberColumnCommit" prefWidth="55.0" resizable="false" styleClass="number-column" text="NUM" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="memoColumn" prefWidth="379.0" text="MEMO" />
               </columns>
                <contextMenu>
                   <ContextMenu>

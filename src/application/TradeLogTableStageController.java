@@ -155,6 +155,8 @@ public  class TradeLogTableStageController implements Initializable{
 		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		memoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		
+	
+		
 	}
 	private void setCellValueFactoryes(){
 		//引数の"id","date"などの文字列がPropertyBeansクラスのTradeLogRecordのprivate変数名と完全一致させると
