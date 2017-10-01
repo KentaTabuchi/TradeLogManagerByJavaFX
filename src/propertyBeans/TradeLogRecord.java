@@ -75,14 +75,14 @@ public class TradeLogRecord {
 	public void setCodeProperty(int code){
 		this.code = new SimpleIntegerProperty(code);
 	}
-	public void setPurchasePriceProperty(int purchasePrice){
-		this.purchasePrice = new SimpleIntegerProperty(purchasePrice);
+	public void setPurchasePriceProperty(Number number){
+		this.purchasePrice = new SimpleIntegerProperty(number.intValue());
 	}
 	public void setPurchaseNumberProperty(int purchaseNumber){
 		this.purchaseNum = new SimpleIntegerProperty(purchaseNumber);
 	}
-	public void setSellinPriceProperty(int sellingPrice){
-		this.sellingPrice = new SimpleIntegerProperty(sellingPrice);
+	public void setSellinPriceProperty(Number sellingPrice){
+		this.sellingPrice = new SimpleIntegerProperty(sellingPrice.intValue());
 	}
 	public void setSellingNumberProperty(int sellingNumber){
 		this.sellingNum = new SimpleIntegerProperty(sellingNumber);

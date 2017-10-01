@@ -31,6 +31,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
@@ -52,9 +53,9 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableColumn<Object,Object> codeColumn;
 	@FXML private TableColumn<TradeLogRecord,String> bookNameColumn;
 	@FXML private TableColumn<TradeLogRecord,String> marcketColumn;
-	@FXML private TableColumn<TradeLogRecord,Integer> purchasePriceColumn;
+	@FXML private TableColumn<TradeLogRecord,Number> purchasePriceColumn;
 	@FXML private TableColumn<TradeLogRecord,Integer> purchaseNumColumn;
-	@FXML private TableColumn<TradeLogRecord,Integer> sellingPriceColumn;
+	@FXML private TableColumn<TradeLogRecord,Number> sellingPriceColumn;
 	@FXML private TableColumn<TradeLogRecord,Integer> sellingNumColumn;
 	@FXML private TableColumn<TradeLogRecord, String> memoColumn;
 	@FXML private TextArea memoArea;
@@ -148,9 +149,9 @@ public  class TradeLogTableStageController implements Initializable{
 		});*/
 		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
 		codeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.getSecuritiesCodeList().toArray()));
-		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		memoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		
@@ -163,9 +164,9 @@ public  class TradeLogTableStageController implements Initializable{
 		codeColumn.setCellValueFactory(new PropertyValueFactory<Object,Object>("code"));
 		bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("name"));
 		marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
-		purchasePriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchasePrice"));
+		purchasePriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Number>("purchasePrice"));
 		purchaseNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchaseNum"));
-		sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingPrice"));
+		sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Number>("sellingPrice"));
 		sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
 		memoColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("memo"));
 
@@ -199,7 +200,7 @@ public  class TradeLogTableStageController implements Initializable{
 		this.updateRecord();
 		this.printRecord();
 	}
-	@FXML protected void onPurchasePriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
+	@FXML protected void onPurchasePriceColumnCommit(CellEditEvent<TradeLogRecord, Number> event){
 		System.out.println("onPurchasePriceColumnCommit Start");
 		event.getRowValue().setPurchasePriceProperty(event.getNewValue());
 		this.updateRecord();
@@ -209,7 +210,7 @@ public  class TradeLogTableStageController implements Initializable{
 		event.getRowValue().setPurchaseNumberProperty(event.getNewValue());
 		this.updateRecord();
 	}
-	@FXML protected void onSellingPriceColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
+	@FXML protected void onSellingPriceColumnCommit(CellEditEvent<TradeLogRecord, Number> event){
 		System.out.println("onSellingPriceColumnCommit Start");
 		event.getRowValue().setSellinPriceProperty(event.getNewValue());
 		this.updateRecord();

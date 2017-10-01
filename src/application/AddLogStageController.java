@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import customControl.UnitNameStringConverter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.converter.CurrencyStringConverter;
+import javafx.util.converter.NumberStringConverter;
 import sqlPublication.SQLAddTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 
@@ -67,18 +69,16 @@ public class AddLogStageController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.codeCombo.getItems().addAll((this.getSecuritiesCodeList()));
-		this.setTextFormatter();
+		this.setNumberStringFormatter(this.purchaseNumText);
+		this.setNumberStringFormatter(this.purchasePriceText);
+		this.setNumberStringFormatter(this.sellingNumText);
+		this.setNumberStringFormatter(this.sellingPriceText);
 	}
-	private void setTextFormatter(){
-		CurrencyStringConverter converter = new CurrencyStringConverter();
-		TextFormatter<Number> formatter1 = new TextFormatter<>(converter);
-		TextFormatter<Number> formatter2 = new TextFormatter<>(converter);
-		
-		this.purchasePriceText.setTextFormatter(formatter1);
-		this.sellingPriceText.setTextFormatter(formatter2);
-		formatter1.setValue(0);
-		formatter2.setValue(0);
-		
+	private void setNumberStringFormatter(TextField textField){
+		NumberStringConverter converter = new NumberStringConverter();
+		TextFormatter<Number> formatter = new TextFormatter<>(converter);
+		textField.setTextFormatter(formatter);
+		formatter.setValue(0);
 	}
 
 }
