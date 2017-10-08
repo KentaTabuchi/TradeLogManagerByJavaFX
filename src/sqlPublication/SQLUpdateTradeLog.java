@@ -25,6 +25,7 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 	private int purchaseNumber;
 	private int sellingPrice;
 	private int sellingNumber;
+	private int pL;
 	
 	final String SQL = "UPDATE TRADE_LOG SET "
 			+ "TRADE_DATE = ?,"			//1
@@ -32,7 +33,8 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 			+ "PURCHASE_PRICE = ?,"		//3
 			+ "PURCHASE_NUMBER = ?,"		//4
 			+ "SELLING_PRICE = ?,"		//5
-			+ "SELLING_NUMBER = ? "			//6
+			+ "SELLING_NUMBER = ?, "			//6
+			+ "PL = ? "
 			+ "WHERE ID = ?";			//7
 
 	
@@ -43,7 +45,8 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 			int purchasePrice,
 			int purchaseNumber,
 			int sellingPrice,
-			int sellingNumber){
+			int sellingNumber,
+			int pl){
 		
 		this.id = id;
 		this.tradeDate = tradeDate;
@@ -52,6 +55,7 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 		this.purchaseNumber = purchaseNumber;
 		this.sellingPrice = sellingPrice;
 		this.sellingNumber = sellingNumber;
+		this.pL = pl;
 	}
 	@Override
 	public void executeQuery(Connection con) {
@@ -64,7 +68,8 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 			ps.setInt(4, this.purchaseNumber);
 			ps.setInt(5, this.sellingPrice);
 			ps.setInt(6, this.sellingNumber);
-			ps.setInt(7, this.id);
+			ps.setInt(7, this.pL);
+			ps.setInt(8, this.id);
 			int result = ps.executeUpdate();
 				if(result!=0){
 					System.out.println(result + "update sucessed.");

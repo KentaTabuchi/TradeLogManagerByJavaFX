@@ -24,6 +24,7 @@ public class AddLogStageController implements Initializable{
 	@FXML TextField purchaseNumText;
 	@FXML TextField sellingPriceText;
 	@FXML TextField sellingNumText;
+	@FXML TextField plText;
 	@FXML TextArea memoArea;
 	
 	//ここにテキストボックスに入力されたデータを吸い上げてデータベースに書き込む処理を書く
@@ -43,6 +44,7 @@ public class AddLogStageController implements Initializable{
 									Integer.parseInt(this.purchaseNumText.getText()),
 									Integer.parseInt(this.sellingPriceText.getTextFormatter().getValue().toString()), 
 									Integer.parseInt(this.sellingNumText.getText()),
+									Integer.parseInt(this.plText.getText()),
 									this.memoArea.getText()
 									);
     	@SuppressWarnings("unused")

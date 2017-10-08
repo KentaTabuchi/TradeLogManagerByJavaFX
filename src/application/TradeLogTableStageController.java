@@ -57,6 +57,7 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableColumn<TradeLogRecord,Integer> purchaseNumColumn;
 	@FXML private TableColumn<TradeLogRecord,Number> sellingPriceColumn;
 	@FXML private TableColumn<TradeLogRecord,Integer> sellingNumColumn;
+	@FXML private TableColumn<TradeLogRecord,Integer> pLColumn;
 	@FXML private TableColumn<TradeLogRecord, String> memoColumn;
 	@FXML private TextArea memoArea;
 	@FXML private Label idCountText;
@@ -153,9 +154,8 @@ public  class TradeLogTableStageController implements Initializable{
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		pLColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		memoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-		
-	
 		
 	}
 	private void setCellValueFactoryes(){
@@ -170,6 +170,7 @@ public  class TradeLogTableStageController implements Initializable{
 		purchaseNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchaseNum"));
 		sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Number>("sellingPrice"));
 		sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
+		pLColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("PL"));
 		memoColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("memo"));
 
 	}
@@ -193,8 +194,11 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML protected void onStart(){
 		System.out.println("start");
 	}
-	@FXML protected void onTradeDateColumnCommit(CellEditEvent<TradeLogRecord,Date> event){
-
+	@FXML protected void onPLColumnCommit(CellEditEvent<TradeLogRecord,Integer> event){
+		System.out.println("onPLColumnCommit Start");
+		event.getRowValue().setPLProperty(event.getNewValue());
+		this.updateRecord();
+		this.printRecord();
 	}
 	@FXML protected void onSecuritiesCodeColumnCommit(CellEditEvent<TradeLogRecord, Integer> event){
 		System.out.println("onSecuritiesCodeColumnCommit Start");
@@ -290,6 +294,7 @@ public  class TradeLogTableStageController implements Initializable{
 		System.out.println(record.dateProperty().toString());
 		System.out.println(record.nameProperty());
 		System.out.println(record.purchasePriceProperty());
+		System.out.println(record.PLProperty());
 
 		ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
 				record.idProperty().intValue(),
@@ -298,7 +303,8 @@ public  class TradeLogTableStageController implements Initializable{
 				record.purchasePriceProperty().intValue(),
 				record.purchaseNumProperty().intValue(),
 				record.sellingPriceProperty().intValue(),
-				record.sellingNumProperty().intValue());
+				record.sellingNumProperty().intValue(),
+				record.PLProperty().intValue());
 		@SuppressWarnings("unused")
 		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);		
 	}
@@ -323,6 +329,7 @@ public  class TradeLogTableStageController implements Initializable{
 					e.purchaseNumProperty().get(), 
 					e.sellingPriceProperty().get(), 
 					e.sellingNumProperty().get(),
+					e.PLProperty().get(),
 					e.memoProperty().get()));
 		});
 	}
@@ -347,6 +354,7 @@ public  class TradeLogTableStageController implements Initializable{
 					e.purchaseNumProperty().get(), 
 					e.sellingPriceProperty().get(), 
 					e.sellingNumProperty().get(),
+					e.PLProperty().get(),
 					e.memoProperty().get()));
 		});
 	}
@@ -371,6 +379,7 @@ public  class TradeLogTableStageController implements Initializable{
 					e.purchaseNumProperty().get(), 
 					e.sellingPriceProperty().get(), 
 					e.sellingNumProperty().get(),
+					e.PLProperty().get(),
 					e.memoProperty().get()));
 		});
 	}

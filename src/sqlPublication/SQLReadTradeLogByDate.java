@@ -64,6 +64,7 @@ public class SQLReadTradeLogByDate implements ISQLExecutable {
 					Integer purchaseNum=rs.getInt("PURCHASE_NUMBER");
 					Integer sellingPrice=rs.getInt("SELLING_PRICE");
 					Integer sellingNum=rs.getInt("SELLING_NUMBER");
+					Integer pl = rs.getInt("PL");
 					String memo = rs.getString("MEMO");
 					System.out.println(id+date.toString()+code+name+purchasePrice+purchaseNum+sellingPrice+sellingNum);
 
@@ -77,6 +78,7 @@ public class SQLReadTradeLogByDate implements ISQLExecutable {
 							purchaseNum,
 							sellingPrice,
 							sellingNum,
+							pl,
 							memo);
 					recordList.add(record);
 				}

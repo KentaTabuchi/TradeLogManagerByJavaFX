@@ -86,3 +86,50 @@ CREATE TABLE TRADE_LOG(ID INTEGER AUTO_INCREMENT PRIMARY KEY,SECURITIES_CODE INT
 org.h2.jdbc.JdbcSQLException: テーブル "BOOK_INFO" はすでに存在します
 Table "BOOK_INFO" already exists; SQL statement:
 CREATE TABLE BOOK_INFO(SECURITIES_CODE INT PRIMARY KEY,BOOK_NAME VARCHAR(40),MARCKET VARCHAR(20)) [42101-192]
+2017-10-08 21:16:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: 列名 "PL" が重複しています
+Duplicate column name "PL"; SQL statement:
+ALTER TABLE TRADE_LOG ADD PL INT [42121-192]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.table.Table.setColumns(Table.java:431)
+	at org.h2.table.TableBase.<init>(TableBase.java:45)
+	at org.h2.mvstore.db.MVTable.<init>(MVTable.java:103)
+	at org.h2.mvstore.db.MVTableEngine.createTable(MVTableEngine.java:108)
+	at org.h2.mvstore.db.MVTableEngine.createTable(MVTableEngine.java:41)
+	at org.h2.schema.Schema.createTable(Schema.java:589)
+	at org.h2.command.ddl.AlterTableAlterColumn.cloneTableStructure(AlterTableAlterColumn.java:358)
+	at org.h2.command.ddl.AlterTableAlterColumn.copyData(AlterTableAlterColumn.java:254)
+	at org.h2.command.ddl.AlterTableAlterColumn.update(AlterTableAlterColumn.java:177)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:98)
+	at org.h2.command.Command.executeUpdate(Command.java:258)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:160)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:146)
+	at test.ExecuteSQL$1.executeQuery(ExecuteSQL.java:20)
+	at application.H2DBConnector.<init>(H2DBConnector.java:30)
+	at test.ExecuteSQL.main(ExecuteSQL.java:13)
+2017-10-08 21:17:25 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: SQLステートメントに文法エラーがあります "SELECT * TRADE_LOG[*]"
+Syntax error in SQL statement "SELECT * TRADE_LOG[*]"; SQL statement:
+SELECT * TRADE_LOG [42000-192]
+2017-10-08 21:17:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: メソッドはクエリをサポートしていません。executeUpdateのかわりに、excute、またはexecuteQueryを使用してください
+Method is not allowed for a query. Use execute or executeQuery instead of executeUpdate; SQL statement:
+SELECT * FROM TRADE_LOG [90001-192]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.Prepared.update(Prepared.java:201)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:98)
+	at org.h2.command.Command.executeUpdate(Command.java:258)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:160)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:146)
+	at test.ExecuteSQL$1.executeQuery(ExecuteSQL.java:20)
+	at application.H2DBConnector.<init>(H2DBConnector.java:30)
+	at test.ExecuteSQL.main(ExecuteSQL.java:13)
+2017-10-08 21:48:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: SQLステートメントに文法エラーがあります "SELECT * TRADE_LOG[*]"
+Syntax error in SQL statement "SELECT * TRADE_LOG[*]"; SQL statement:
+SELECT * TRADE_LOG [42000-192]

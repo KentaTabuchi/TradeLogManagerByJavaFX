@@ -24,6 +24,7 @@ public class SQLAddTradeLog implements ISQLExecutable {
 	private int purchaseNumber;
 	private int sellingPrice;
 	private int sellingNumber;
+	private int pl;
 	private String memo;
 	
 	final String SQL = "INSERT INTO TRADE_LOG ("
@@ -34,7 +35,8 @@ public class SQLAddTradeLog implements ISQLExecutable {
 			+ "PURCHASE_NUMBER,"//5
 			+ "SELLING_PRICE,"//6
 			+ "SELLING_NUMBER,"//7
-			+ "MEMO) VALUES(?,?,?,?,?,?,?)";
+			+ "PL,"
+			+ "MEMO) VALUES(?,?,?,?,?,?,?,?)";
 	
 	public SQLAddTradeLog(
 		
@@ -44,6 +46,7 @@ public class SQLAddTradeLog implements ISQLExecutable {
 			int purchaseNumber,
 			int sellingPrice,
 			int sellingNumber,
+			int pl,
 			String memo){
 		
 
@@ -53,6 +56,7 @@ public class SQLAddTradeLog implements ISQLExecutable {
 		this.purchaseNumber = purchaseNumber;
 		this.sellingPrice = sellingPrice;
 		this.sellingNumber = sellingNumber;
+		this.pl = pl;
 		this.memo = memo;
 	}
 	@Override
@@ -65,7 +69,8 @@ public class SQLAddTradeLog implements ISQLExecutable {
 			ps.setInt(4, this.purchaseNumber);
 			ps.setInt(5, this.sellingPrice);
 			ps.setInt(6, this.sellingNumber);
-			ps.setString(7, this.memo);
+			ps.setInt(7, this.pl);
+			ps.setString(8, this.memo);
 			int result = ps.executeUpdate();
 				if(result!=0){
 					System.out.println(result + "件のレコード書き込みに成功しました");

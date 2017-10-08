@@ -57,6 +57,7 @@
                         <TableColumn fx:id="sellingNumColumn" minWidth="0.0" onEditCommit="#onSellingNumberColumnCommit" prefWidth="55.0" resizable="false" styleClass="number-column" text="NUM" />
                      </columns>
                   </TableColumn>
+                  <TableColumn fx:id="pLColumn" onEditCommit="#onPLColumnCommit" prefWidth="75.0" styleClass="number-column" text="PL" />
                   <TableColumn fx:id="memoColumn" prefWidth="379.0" text="MEMO" />
               </columns>
                <contextMenu>

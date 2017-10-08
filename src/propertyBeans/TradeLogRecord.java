@@ -2,12 +2,14 @@ package propertyBeans;
 
 import java.util.Date;
 
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 public class TradeLogRecord {
 	private  IntegerProperty id;
 	private ObjectProperty<Date> date;
@@ -19,10 +21,11 @@ public class TradeLogRecord {
 	private  IntegerProperty sellingPrice;
 	private IntegerProperty sellingNum;
 	private StringProperty memo;
+	private IntegerProperty pL;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TradeLogRecord(int id, Date date, int code, String name,String marcket ,int purchasePrice,
-			int purchaseNum, int sellingPrice, int sellingNum,String memo) {
+			int purchaseNum, int sellingPrice, int sellingNum,int pl,String memo) {
 		this.id= new SimpleIntegerProperty(id);
 		this.date= new SimpleObjectProperty(date);
 		this.code= new SimpleIntegerProperty(code);
@@ -33,6 +36,7 @@ public class TradeLogRecord {
 		this.sellingPrice = new SimpleIntegerProperty(sellingPrice);
 		this.sellingNum = new SimpleIntegerProperty(sellingNum);
 		this.memo = new SimpleStringProperty(memo);
+		this.pL = new SimpleIntegerProperty(pl);
 	}
 
 	public IntegerProperty idProperty() {
@@ -65,6 +69,10 @@ public class TradeLogRecord {
 	public StringProperty memoProperty(){
 		return memo;
 	}
+	public IntegerProperty PLProperty() {
+		return pL;
+	}
+
 	public void setIdProperty(int id){
 		this.id = new SimpleIntegerProperty(id);
 	}
@@ -90,4 +98,10 @@ public class TradeLogRecord {
 	public void setMemoProperty(String memo){
 		this.memo = new SimpleStringProperty(memo);
 	}
+	public void setPLProperty(int pl) {
+		this.pL = new SimpleIntegerProperty(pl);
+	}
+
+
+
 }
