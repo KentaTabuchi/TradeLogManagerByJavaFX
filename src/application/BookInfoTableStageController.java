@@ -16,8 +16,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.NumberStringConverter;
 import propertyBeans.BookInfoRecord;
-import propertyBeans.TradeLogRecord;
 import sqlPublication.SQLAddBookInfo;
 import sqlPublication.SQLDeleteBookInfo;
 import sqlPublication.SQLReadAllBookInfo;
@@ -28,7 +29,7 @@ public class BookInfoTableStageController implements Initializable {
 	@FXML private TableColumn <BookInfoRecord,Integer>codeColumn;
 	@FXML private TableColumn <BookInfoRecord,String>bookNameColumn;
 	@FXML private TableColumn <Object,Object>marcketColumn;
-    @FXML private TableColumn<BookInfoRecord,Integer> profitColumn;
+    @FXML private TableColumn<BookInfoRecord,Number> profitColumn;
     
     @FXML private TextField codeText;
     @FXML private TextField bookNameText;
@@ -41,10 +42,11 @@ public class BookInfoTableStageController implements Initializable {
 		  //TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
 		
 			marcketColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.marcketNameList().toArray()));
+			profitColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 			codeColumn.setCellValueFactory(new PropertyValueFactory<BookInfoRecord,Integer>("securitiesCode"));
 	        bookNameColumn.setCellValueFactory(new PropertyValueFactory<BookInfoRecord,String>("bookName"));
 	        marcketColumn.setCellValueFactory(new PropertyValueFactory<Object,Object>("marcket"));
-	        profitColumn.setCellValueFactory(new PropertyValueFactory<BookInfoRecord,Integer>("profit"));
+	        profitColumn.setCellValueFactory(new PropertyValueFactory<BookInfoRecord,Number>("profit"));
 	        
 			this.marcketCombo.getItems().addAll((Marcket.values()));
 		this.printRecord();

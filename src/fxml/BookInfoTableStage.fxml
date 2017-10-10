@@ -9,12 +9,12 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BookInfoTableStageController">
    <center>
-      <TableView fx:id="tableView" editable="true" prefHeight="289.0" prefWidth="439.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" editable="true" prefHeight="300.0" prefWidth="445.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="codeColumn" text="CODE" />
-          <TableColumn fx:id="bookNameColumn" prefWidth="180.0" text="BOOK NAME " />
-            <TableColumn fx:id="marcketColumn" onEditCommit="#onMarcketColumnCommit" prefWidth="97.0" text="MARCKET" />
-            <TableColumn fx:id="profitColumn" editable="false" prefWidth="75.0" text="PROFIT" />
+          <TableColumn fx:id="codeColumn" resizable="false" text="CODE" />
+          <TableColumn fx:id="bookNameColumn" prefWidth="180.0" resizable="false" text="BOOK NAME " />
+            <TableColumn fx:id="marcketColumn" onEditCommit="#onMarcketColumnCommit" prefWidth="100.0" resizable="false" text="MARCKET" />
+            <TableColumn fx:id="profitColumn" editable="false" prefWidth="69.0" resizable="false" styleClass="number-column" text="PROFIT" />
         </columns>
          <contextMenu>
             <ContextMenu>

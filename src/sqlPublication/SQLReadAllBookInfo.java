@@ -23,18 +23,22 @@ public class SQLReadAllBookInfo implements ISQLExecutable {
 	 * @see application.ISQLExcutable#excuteQuery()
 	 */
 	public List<BookInfoRecord> recordList;
-	final String SQL = "SELECT * FROM BOOK_INFO ORDER BY SECURITIES_CODE";
+	final String SQL_FIND_BOOK_INFO = "SELECT * FROM BOOK_INFO ORDER BY SECURITIES_CODE";
+	final String SQL_SUM_PROFIT = "SELECT SUM(PL) AS \"PROFIT\" FROM TRADE_LOG WHERE SECURITIES_CODE = ?";
 	@Override
 	public void executeQuery(Connection con) {
 		this.recordList = new ArrayList<BookInfoRecord>();
 		System.out.println("BookInfoRecord->executeQuery");
 		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
 		try {
-			ps = con.prepareStatement(this.SQL);
+			ps = con.prepareStatement(this.SQL_FIND_BOOK_INFO);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 		try {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
@@ -45,9 +49,16 @@ public class SQLReadAllBookInfo implements ISQLExecutable {
 					Integer securitiesCode=rs.getInt("SECURITIES_CODE");
 					String bookName=rs.getString("BOOK_NAME");
 					String marcket=rs.getString("MARCKET");
-					Integer profit = 100;
+					Integer profit = null;
+					ps2 = con.prepareStatement(this.SQL_SUM_PROFIT);
+					ps2.setInt(1, securitiesCode);
+					rs2 = ps2.executeQuery();
+					
+					while(rs2.next()){
+						profit = rs2.getInt("PROFIT");
+					}
+					
 					System.out.println(securitiesCode+bookName+marcket);
-					// TODO 仮に１００を入れているが実際には損益の集計された金額が入るようにする
 					BookInfoRecord record = new BookInfoRecord(securitiesCode,bookName,marcket,profit);
 					
 					recordList.add(record);
