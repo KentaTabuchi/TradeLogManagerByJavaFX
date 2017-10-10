@@ -103,7 +103,6 @@ public  class TradeLogTableStageController implements Initializable{
 			stage.setY(stage.getY()+posY);
 			stage.setTitle(title);
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 	}

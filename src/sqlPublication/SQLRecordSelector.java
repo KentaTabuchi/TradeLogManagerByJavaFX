@@ -34,7 +34,6 @@ public class SQLRecordSelector implements ISQLExecutable {
 		try {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 			try {
@@ -56,7 +55,6 @@ public class SQLRecordSelector implements ISQLExecutable {
 					System.out.println(sellingNum);
 				}
 			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
 		}

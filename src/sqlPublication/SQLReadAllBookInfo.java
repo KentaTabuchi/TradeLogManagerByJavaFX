@@ -38,7 +38,6 @@ public class SQLReadAllBookInfo implements ISQLExecutable {
 		try {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 			try {
@@ -46,8 +45,11 @@ public class SQLReadAllBookInfo implements ISQLExecutable {
 					Integer securitiesCode=rs.getInt("SECURITIES_CODE");
 					String bookName=rs.getString("BOOK_NAME");
 					String marcket=rs.getString("MARCKET");
+					Integer profit = 100;
 					System.out.println(securitiesCode+bookName+marcket);
-					BookInfoRecord record = new BookInfoRecord(securitiesCode,bookName,marcket);
+					// TODO 仮に１００を入れているが実際には損益の集計された金額が入るようにする
+					BookInfoRecord record = new BookInfoRecord(securitiesCode,bookName,marcket,profit);
+					
 					recordList.add(record);
 				}
 			} catch (SQLException e) {

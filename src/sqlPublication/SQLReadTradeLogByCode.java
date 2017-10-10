@@ -47,7 +47,6 @@ public class SQLReadTradeLogByCode implements ISQLExecutable {
 			ps.setInt(1,this.code);
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 			try {
@@ -80,7 +79,6 @@ public class SQLReadTradeLogByCode implements ISQLExecutable {
 					recordList.add(record);
 				}
 			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
 		}

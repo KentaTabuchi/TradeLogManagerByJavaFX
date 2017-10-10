@@ -14,7 +14,6 @@ public class ExecuteSQL {
 		final String SQL = "SELECT * TRADE_LOG";
 			@Override
 			public void executeQuery(Connection con) {
-				// TODO 自動生成されたメソッド・スタブ
 				
 				try(PreparedStatement ps = con.prepareStatement(this.SQL)){
 					int result = ps.executeUpdate();

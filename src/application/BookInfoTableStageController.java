@@ -25,28 +25,26 @@ import sqlPublication.SQLUpdateBookInfo;
 
 public class BookInfoTableStageController implements Initializable {
     @FXML private TableView<BookInfoRecord> tableView;
-    @SuppressWarnings("rawtypes")
-	@FXML private TableColumn codeColumn;
-    @SuppressWarnings("rawtypes")
-	@FXML private TableColumn bookNameColumn;
-    @SuppressWarnings("rawtypes")
-	@FXML private TableColumn marcketColumn;
+	@FXML private TableColumn <BookInfoRecord,Integer>codeColumn;
+	@FXML private TableColumn <BookInfoRecord,String>bookNameColumn;
+	@FXML private TableColumn <Object,Object>marcketColumn;
+    @FXML private TableColumn<BookInfoRecord,Integer> profitColumn;
     
     @FXML private TextField codeText;
     @FXML private TextField bookNameText;
     @FXML private ComboBox<Marcket> marcketCombo;
     @FXML private Label statusLabel;
-	@SuppressWarnings("unchecked")
-	@Override
+	
+    @Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO 自動生成されたメソッド・スタブ
 		  //引数の"id","date"などの文字列がPropertyBeansクラスのBookInfoRecordのprivate変数名と完全一致させると
 		  //TableViewと関連づけられる。文字列を間違えるとデータを表示できない。
 		
 			marcketColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.marcketNameList().toArray()));
-			codeColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("securitiesCode"));
-	        bookNameColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("bookName"));
-	        marcketColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("marcket"));
+			codeColumn.setCellValueFactory(new PropertyValueFactory<BookInfoRecord,Integer>("securitiesCode"));
+	        bookNameColumn.setCellValueFactory(new PropertyValueFactory<BookInfoRecord,String>("bookName"));
+	        marcketColumn.setCellValueFactory(new PropertyValueFactory<Object,Object>("marcket"));
+	        profitColumn.setCellValueFactory(new PropertyValueFactory<BookInfoRecord,Integer>("profit"));
 	        
 			this.marcketCombo.getItems().addAll((Marcket.values()));
 		this.printRecord();
@@ -80,7 +78,10 @@ public class BookInfoTableStageController implements Initializable {
 				this.tableView.getItems().add(new BookInfoRecord(
 							e.securitiesCodeProperty().get(),
 							e.bookNameProperty().get(),
-							e.marcketProperty().get())
+							e.marcketProperty().get(),
+							e.profitProperty().get()
+							)
+						
 						);
 			});
 	  }

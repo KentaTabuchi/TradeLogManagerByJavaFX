@@ -50,7 +50,6 @@ public class SQLReadTradeLogByDate implements ISQLExecutable {
 			ps.setInt(2,this.month);
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 			try {
@@ -83,7 +82,6 @@ public class SQLReadTradeLogByDate implements ISQLExecutable {
 					recordList.add(record);
 				}
 			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
 		}
