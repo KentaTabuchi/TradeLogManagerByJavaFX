@@ -19,32 +19,33 @@ import sqlPublication.SQLReadAllBookInfo;
 public class AddLogStageController implements Initializable{
 
 	@FXML DatePicker datePicker;
-	@FXML ComboBox<Integer> codeCombo;
+	@FXML ComboBox<String> codeCombo;
 	@FXML TextField purchasePriceText;
 	@FXML TextField purchaseNumText;
 	@FXML TextField sellingPriceText;
 	@FXML TextField sellingNumText;
-	@FXML TextField plText;
+	//@FXML TextField plText;
 	@FXML TextArea memoArea;
 	
 	//ここにテキストボックスに入力されたデータを吸い上げてデータベースに書き込む処理を書く
 	@FXML protected void onAddButtonClick(ActionEvent evt){
 	
 		System.out.println("AddButton was Clicked from AddLogStage");
-		
 		System.out.println(this.datePicker.getValue());
 		System.out.println(codeCombo.getValue());
 		System.out.println(purchasePriceText.getText());
 		
+		String code = this.codeCombo.getValue().substring(1,5);
+		System.out.println("code="+code);
 		ISQLExecutable sqlExecutable= 
 				new SQLAddTradeLog(	
 									java.sql.Date.valueOf(this.datePicker.getValue()),
-									Integer.parseInt(this.codeCombo.getValue().toString()),
+									Integer.parseInt(code),
 									Integer.parseInt(this.purchasePriceText.getTextFormatter().getValue().toString()),
 									Integer.parseInt(this.purchaseNumText.getText()),
 									Integer.parseInt(this.sellingPriceText.getTextFormatter().getValue().toString()), 
 									Integer.parseInt(this.sellingNumText.getText()),
-									Integer.parseInt(this.plText.getText()),
+									0,//PLTextField is not implemented.so I use direct number 0　for now.
 									this.memoArea.getText()
 									);
     	@SuppressWarnings("unused")
@@ -55,13 +56,20 @@ public class AddLogStageController implements Initializable{
 	}
 
 	
-	private ArrayList<Integer> getSecuritiesCodeList(){
-		ArrayList<Integer> list = new ArrayList<>();
+	/**
+	 * This function initialize context of ComboBox for inputing BookCode.
+	 * @return
+	 */
+	private ArrayList<String> getSecuritiesCodeList(){
+		ArrayList<String> list = new ArrayList<>();
 		SQLReadAllBookInfo sqlReadAllbookInfo = new SQLReadAllBookInfo();
 		@SuppressWarnings("unused")
 		H2DBConnector connector = new H2DBConnector(sqlReadAllbookInfo);
 		sqlReadAllbookInfo.recordList.forEach(e->{
-			list.add(e.securitiesCodeProperty().get());
+			String temp;
+			temp = "["+ e.securitiesCodeProperty().get() +"] "+ e.bookNameProperty().get();
+			list.add(temp);
+			//list.add(e.securitiesCodeProperty().get());
 		});
 		return list;
   

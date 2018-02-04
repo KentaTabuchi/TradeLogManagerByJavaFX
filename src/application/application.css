@@ -23,3 +23,6 @@
 .number-column{
 	-fx-alignment:center-right;
 }
+.minus-number-column{
+	-fx-text-fill:red;	
+}

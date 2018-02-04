@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import customControl.CustomTextField;
+import customControl.PLTextFieldTableCell;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -47,7 +50,7 @@ import sqlPublication.SQLUpdateTradeLog;
  */
 public  class TradeLogTableStageController implements Initializable{
 	private static final int MAX_CHARCTER_COUNTS_IN_MEMO = 255; 
-	@FXML private TableView<TradeLogRecord> tableView;
+	@FXML public TableView<TradeLogRecord> tableView;
 	@FXML private TableColumn<TradeLogRecord,Integer> idColumn;
 	@FXML private TableColumn <Object,java.util.Date>dateColumn;
 	@FXML private TableColumn<Object,Object> codeColumn;
@@ -57,7 +60,7 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableColumn<TradeLogRecord,Integer> purchaseNumColumn;
 	@FXML private TableColumn<TradeLogRecord,Number> sellingPriceColumn;
 	@FXML private TableColumn<TradeLogRecord,Integer> sellingNumColumn;
-	@FXML private TableColumn<TradeLogRecord,Integer> pLColumn;
+	@FXML private TableColumn<TradeLogRecord,Number> pLColumn;
 	@FXML private TableColumn<TradeLogRecord, String> memoColumn;
 	@FXML private TextArea memoArea;
 	@FXML private Label idCountText;
@@ -123,6 +126,8 @@ public  class TradeLogTableStageController implements Initializable{
 		this.initializeMonthChoice();
 		this.initializeCodeCombo();
 		
+		PLTextFieldTableCell.tradeLogTableStageController = this;
+		
 		LocalDateTime dateTime = LocalDateTime.now();
 		this.yearText.setText(String.valueOf(dateTime.getYear()));
 		this.monthChoice.setValue(dateTime.getMonthValue());
@@ -143,17 +148,17 @@ public  class TradeLogTableStageController implements Initializable{
 		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
 		H2DBConnector connector = new H2DBConnector(sqlReadAllTradeLog);
-        /**dateColumn.setCellFactory(p -> {
-		    DatePickerTableCell datePick = new DatePickerTableCell(sqlReadAllTradeLog.recordList);
-		    return datePick;
-		});*/
+  
 		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
 		codeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.getSecuritiesCodeList().toArray()));
 		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		sellingPriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 		sellingNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		pLColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		//pLColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
+		// TODO 行ごとに色を帰るにはsetCellFactoryの引数で無名クラスを使うようだ。まだよくわからない
+		//pLColumn.setCellFactory(e-> {return new PLTextFieldTableCell();});
+		pLColumn.setCellFactory(CustomTextField.forTableColumn(new NumberStringConverter()));
 		memoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		
 	}
@@ -169,7 +174,7 @@ public  class TradeLogTableStageController implements Initializable{
 		purchaseNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("purchaseNum"));
 		sellingPriceColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Number>("sellingPrice"));
 		sellingNumColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("sellingNum"));
-		pLColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Integer>("PL"));
+		pLColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,Number>("PL"));
 		memoColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("memo"));
 
 	}
@@ -193,9 +198,12 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML protected void onStart(){
 		System.out.println("start");
 	}
-	@FXML protected void onPLColumnCommit(CellEditEvent<TradeLogRecord,Integer> event){
+	
+	// TODO カスタムクラスを指定しているときはそのクラス内のcommit()で行う
+	@FXML protected void onPLColumnCommit(CellEditEvent<TradeLogRecord,Number> event){
 		System.out.println("onPLColumnCommit Start");
-		event.getRowValue().setPLProperty(event.getNewValue());
+		event.getRowValue().setPLProperty(event.getNewValue().intValue());
+		
 		this.updateRecord();
 		this.printRecord();
 	}
@@ -282,7 +290,7 @@ public  class TradeLogTableStageController implements Initializable{
 		System.out.println(this.codeCombo.getValue());
 		this.printRecord(this.codeCombo.getValue());
 	}
-	private void updateRecord(){
+	public void updateRecord(){
 		int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
 
 		ObservableList<TradeLogRecord> recordList = tableView.getItems();
