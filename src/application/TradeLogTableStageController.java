@@ -5,7 +5,6 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -18,15 +17,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -36,12 +38,12 @@ import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import propertyBeans.TradeLogRecord;
+import sqlPublication.SQLAddTradeLog;
 import sqlPublication.SQLDeleteTradeLog;
 import sqlPublication.SQLReadAllBookInfo;
 import sqlPublication.SQLReadAllTradeLog;
 import sqlPublication.SQLReadTradeLogByCode;
 import sqlPublication.SQLReadTradeLogByDate;
-import sqlPublication.SQLUpdateMemo;
 import sqlPublication.SQLUpdateTradeLog;
 
 /**
@@ -49,7 +51,6 @@ import sqlPublication.SQLUpdateTradeLog;
  *
  */
 public  class TradeLogTableStageController implements Initializable{
-	private static final int MAX_CHARCTER_COUNTS_IN_MEMO = 255; 
 	@FXML public TableView<TradeLogRecord> tableView;
 	@FXML private TableColumn<TradeLogRecord,Integer> idColumn;
 	@FXML private TableColumn <Object,java.util.Date>dateColumn;
@@ -62,11 +63,18 @@ public  class TradeLogTableStageController implements Initializable{
 	@FXML private TableColumn<TradeLogRecord,Integer> sellingNumColumn;
 	@FXML private TableColumn<TradeLogRecord,Number> pLColumn;
 	@FXML private TableColumn<TradeLogRecord, String> memoColumn;
+	//画面下の新規レコード入力コントロール
+	@FXML private ComboBox<String>codeField;
+	@FXML private DatePicker dateField;
+	@FXML private TextField purchasePriceField;
+	@FXML private TextField purchaseNumberField;
+	@FXML private TextField sellingPriceField;
+	@FXML private TextField sellingNumberField;
 	@FXML private TextArea memoArea;
-	@FXML private Label idCountText;
+	//
 	@FXML private TextField yearText;
 	@FXML private ChoiceBox<Integer> monthChoice;
-	@FXML private ComboBox<Integer> codeCombo;
+	@FXML private ComboBox<String> codeCombo;
 	@FXML protected void onShowAddLogWindowMenuClick(ActionEvent evt){
 		System.out.println("starting onShowAddLogWindowMenuClick was successed.");
 		this.createBoderPaneStage("AddLogStage.fxml","AddLogStage",350,0, 400, 400);
@@ -131,6 +139,11 @@ public  class TradeLogTableStageController implements Initializable{
 		LocalDateTime dateTime = LocalDateTime.now();
 		this.yearText.setText(String.valueOf(dateTime.getYear()));
 		this.monthChoice.setValue(dateTime.getMonthValue());
+		this.codeField.getItems().addAll((this.getSecuritiesCodeList()));
+		this.setNumberStringFormatter(this.purchaseNumberField);
+		this.setNumberStringFormatter(this.purchasePriceField);
+		this.setNumberStringFormatter(this.sellingPriceField);
+		this.setNumberStringFormatter(this.sellingNumberField);
 	}
 	private void initializeMonthChoice(){
 		monthChoice.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12);
@@ -178,13 +191,17 @@ public  class TradeLogTableStageController implements Initializable{
 		memoColumn.setCellValueFactory(new PropertyValueFactory<TradeLogRecord,String>("memo"));
 
 	}
-	private ArrayList<Integer> getSecuritiesCodeList(){
-		ArrayList<Integer> list = new ArrayList<>();
+	private ArrayList<String> getSecuritiesCodeList(){
+
+		ArrayList<String> list = new ArrayList<>();
 		SQLReadAllBookInfo sqlReadAllbookInfo = new SQLReadAllBookInfo();
 		@SuppressWarnings("unused")
 		H2DBConnector connector = new H2DBConnector(sqlReadAllbookInfo);
 		sqlReadAllbookInfo.recordList.forEach(e->{
-			list.add(e.securitiesCodeProperty().get());
+			String temp;
+			temp = "["+ e.securitiesCodeProperty().get() +"] "+ e.bookNameProperty().get();
+			list.add(temp);
+			//list.add(e.securitiesCodeProperty().get());
 		});
 		return list;
   
@@ -233,6 +250,12 @@ public  class TradeLogTableStageController implements Initializable{
 		event.getRowValue().setSellingNumberProperty(event.getNewValue());
 		this.updateRecord();
 	}
+	@FXML protected void onMemoColumnCommit(CellEditEvent<TradeLogRecord,String>event){
+		System.out.println("onMemoColumnCommit Start");
+		event.getRowValue().setMemoProperty(event.getNewValue());
+		this.updateRecord();		
+	}
+
 	@FXML protected void onContextMenuRequested(){
 		System.out.println("onContextMuenuRequested Start");
 		int indexRow = this.tableView.getSelectionModel().getSelectedIndex();
@@ -258,27 +281,42 @@ public  class TradeLogTableStageController implements Initializable{
 		System.out.println(memo);
 		this.memoArea.setText(memo);
 	}
-	@FXML protected void onAction(){
-		System.out.println("onButtonClicked");
-		if(this.memoArea.getText().length()>MAX_CHARCTER_COUNTS_IN_MEMO){
-			System.out.println("too many char.plese write" +  MAX_CHARCTER_COUNTS_IN_MEMO + "chars.");
-		}
-		int indexRow = this.tableView.getSelectionModel().getSelectedIndex();
-		ObservableList<TradeLogRecord> recordList = tableView.getItems();
-		TradeLogRecord record = recordList.get(indexRow);
-		ISQLExecutable sqlUpdateMemo = new SQLUpdateMemo(
-				record.idProperty().intValue(),
-				memoArea.getText());
-		@SuppressWarnings("unused")
-		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateMemo);	
-		this.printRecord();
+	/**
+	 * 新規レコードの追加を発動
+	 * @param evt
+	 */
+	@FXML protected void onAddButtonClicked(ActionEvent evt){
+		System.out.println("追加ボタンが押されました");		
+		System.out.println(this.dateField.getValue());
+		System.out.println(codeField.getValue());
+		System.out.println(this.purchasePriceField.getText());
+		try{
+		String code = this.codeField.getValue().substring(1,5);
+		System.out.println("code="+code);
+
+		ISQLExecutable sqlExecutable= 
+				new SQLAddTradeLog(	
+									java.sql.Date.valueOf(this.dateField.getValue()),
+									Integer.parseInt(code),
+									Integer.parseInt(this.purchasePriceField.getTextFormatter().getValue().toString()),
+									Integer.parseInt(this.purchaseNumberField.getText()),
+									Integer.parseInt(this.sellingPriceField.getTextFormatter().getValue().toString()), 
+									Integer.parseInt(this.sellingNumberField.getText()),
+									0,//PLTextField is not implemented.so I use direct number 0　for now.
+									this.memoArea.getText()
+									);
+    	@SuppressWarnings("unused")
+		H2DBConnector mysqlConnector = new H2DBConnector(sqlExecutable);
+		Alert alert = new Alert(AlertType.NONE, "新規レコードを追加しました", ButtonType.OK);
+		alert.show();
+    	}catch(NullPointerException e){
+    		Alert alert = new Alert(AlertType.ERROR, "記入漏れがあります", ButtonType.OK);
+    		alert.show();
+    	}
+
+		printRecord();
 	}
-	@FXML protected void onKeyTyped(){
-		System.out.println("onKeyTyped");
-		int length = this.memoArea.getText().length();
-		this.idCountText.setText(String.valueOf(length) + "/" + MAX_CHARCTER_COUNTS_IN_MEMO);
-		
-	}
+
 	@FXML protected void onFilterByDateButtonClicked(){
 		System.out.println("onFilterByDateButtonClicked");
 		System.out.println(yearText.getText());
@@ -286,9 +324,11 @@ public  class TradeLogTableStageController implements Initializable{
 		this.printRecord(Integer.valueOf(yearText.getText()), monthChoice.getValue().intValue());
 	}
 	@FXML protected void onFilterByCodeButtonClicked(){
-		System.out.println("onFilterByDateButtonClicked");
+		System.out.println("onFilterByCodeButtonClicked");
 		System.out.println(this.codeCombo.getValue());
-		this.printRecord(this.codeCombo.getValue());
+		final String temp = this.codeCombo.getValue().substring(1, 5);
+		System.out.println("temp= "+temp);
+		this.printRecord(Integer.parseInt(temp));
 	}
 	public void updateRecord(){
 		int indexRow = tableView.getSelectionModel().getSelectedIndex(); 
@@ -365,7 +405,7 @@ public  class TradeLogTableStageController implements Initializable{
 					e.memoProperty().get()));
 		});
 	}
-	public void printRecord(){
+	public void printRecord() {
 		SQLReadAllTradeLog sqlReadAllTradeLog= new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
 		H2DBConnector mysqlConnector = new H2DBConnector(sqlReadAllTradeLog);
@@ -389,5 +429,12 @@ public  class TradeLogTableStageController implements Initializable{
 					e.PLProperty().get(),
 					e.memoProperty().get()));
 		});
+	}
+
+	private void setNumberStringFormatter(TextField textField){
+		NumberStringConverter converter = new NumberStringConverter();
+		TextFormatter<Number> formatter = new TextFormatter<>(converter);
+		textField.setTextFormatter(formatter);
+		formatter.setValue(0);
 	}
 }
