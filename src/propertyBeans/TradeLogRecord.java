@@ -52,6 +52,14 @@ public class TradeLogRecord {
 		return name;
 	}
 	public StringProperty marcketProperty(){
+		switch (marcket.get()){
+		case "TSE1":marcket = new SimpleStringProperty("東証1部");break;
+		case "TSE2":marcket = new SimpleStringProperty("東証2部");break;
+		case "JASDAQ":marcket = new SimpleStringProperty("ジャスダック");break;
+		case "MOTHERS":marcket = new SimpleStringProperty("マザーズ");break;
+		case "OTHER":marcket = new SimpleStringProperty("その他");break;
+		default:break;
+		}
 		return marcket;
 	}
 	public IntegerProperty purchasePriceProperty(){

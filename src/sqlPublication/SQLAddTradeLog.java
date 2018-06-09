@@ -38,7 +38,7 @@ public class SQLAddTradeLog implements ISQLExecutable {
 			+ "PL,"
 			+ "MEMO) VALUES(?,?,?,?,?,?,?,?)";
 	
-	public SQLAddTradeLog(
+	public SQLAddTradeLog (
 		
 			Date tradeDate,
 			int securitiedCode,

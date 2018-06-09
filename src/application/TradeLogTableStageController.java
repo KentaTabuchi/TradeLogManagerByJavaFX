@@ -161,8 +161,8 @@ public  class TradeLogTableStageController implements Initializable{
 		SQLReadAllTradeLog sqlReadAllTradeLog = new SQLReadAllTradeLog();
 		@SuppressWarnings("unused")
 		H2DBConnector connector = new H2DBConnector(sqlReadAllTradeLog);
-  
-		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
+		final String pattern = "yyyy/MM/dd";
+		dateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter(pattern)));
 		codeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(this.getSecuritiesCodeList().toArray()));
 		purchasePriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new NumberStringConverter()));
 		purchaseNumColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));

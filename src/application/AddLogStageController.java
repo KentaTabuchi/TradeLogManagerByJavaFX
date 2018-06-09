@@ -69,7 +69,6 @@ public class AddLogStageController implements Initializable{
 			String temp;
 			temp = "["+ e.securitiesCodeProperty().get() +"] "+ e.bookNameProperty().get();
 			list.add(temp);
-			//list.add(e.securitiesCodeProperty().get());
 		});
 		return list;
   
