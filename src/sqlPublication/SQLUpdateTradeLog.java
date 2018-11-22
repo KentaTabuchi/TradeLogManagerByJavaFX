@@ -26,17 +26,25 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 	private int sellingPrice;
 	private int sellingNumber;
 	private int pL;
+	private String memo;
 	
+	//発行するSQL文。ケアレスミス多発。慎重に。
 	final String SQL = "UPDATE TRADE_LOG SET "
 			+ "TRADE_DATE = ?,"			//1
 			+ "SECURITIES_CODE = ?,"  	//2
 			+ "PURCHASE_PRICE = ?,"		//3
 			+ "PURCHASE_NUMBER = ?,"		//4
 			+ "SELLING_PRICE = ?,"		//5
-			+ "SELLING_NUMBER = ?, "			//6
-			+ "PL = ? "
-			+ "WHERE ID = ?";			//7
-
+			+ "SELLING_NUMBER = ?,"			//6
+			+ "PL = ?,"	//7
+			+ "MEMO = ? " //8
+			+ "WHERE ID = ?"; //9			
+/* 
+ * ここに項目を追加する場合、カンマとスペースに気をつける。
+ * 下から２段目の行の最後にカンマを"つけない"。代わりにスペースを入れる。
+ * ここで起きるsyntax errorの大半がそれ。
+ * 毎回詰まるので、変更するときは変更前の部分を丸ごとコピーとって控えておく。s
+ * **/
 	
 	public SQLUpdateTradeLog(
 			int id,
@@ -46,7 +54,8 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 			int purchaseNumber,
 			int sellingPrice,
 			int sellingNumber,
-			int pl){
+			int pl,
+			String memo){
 		
 		this.id = id;
 		this.tradeDate = tradeDate;
@@ -56,6 +65,7 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 		this.sellingPrice = sellingPrice;
 		this.sellingNumber = sellingNumber;
 		this.pL = pl;
+		this.memo = memo;
 	}
 	@Override
 	public void executeQuery(Connection con) {
@@ -69,7 +79,9 @@ public class SQLUpdateTradeLog implements ISQLExecutable {
 			ps.setInt(5, this.sellingPrice);
 			ps.setInt(6, this.sellingNumber);
 			ps.setInt(7, this.pL);
-			ps.setInt(8, this.id);
+			ps.setString(8, this.memo);
+			ps.setInt(9, this.id);
+			
 			int result = ps.executeUpdate();
 				if(result!=0){
 					System.out.println(result + "update sucessed.");

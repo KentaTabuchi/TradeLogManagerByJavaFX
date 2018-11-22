@@ -250,6 +250,7 @@ public  class TradeLogTableStageController implements Initializable{
 		event.getRowValue().setSellingNumberProperty(event.getNewValue());
 		this.updateRecord();
 	}
+	// TODO 
 	@FXML protected void onMemoColumnCommit(CellEditEvent<TradeLogRecord,String>event){
 		System.out.println("onMemoColumnCommit Start");
 		event.getRowValue().setMemoProperty(event.getNewValue());
@@ -335,14 +336,15 @@ public  class TradeLogTableStageController implements Initializable{
 
 		ObservableList<TradeLogRecord> recordList = tableView.getItems();
 		TradeLogRecord record = recordList.get(indexRow);
-
+		System.out.println("---updateRecord中です。テーブルに入力されたデータを出力します。---");
 		System.out.println("Selected Row =" + indexRow);
 		System.out.println(record.idProperty());
 		System.out.println(record.dateProperty().toString());
 		System.out.println(record.nameProperty());
 		System.out.println(record.purchasePriceProperty());
 		System.out.println(record.PLProperty());
-
+		System.out.println(record.memoProperty());
+		System.out.println("--------------------------------------");
 		ISQLExecutable sqlUpdateTradeLog = new SQLUpdateTradeLog(
 				record.idProperty().intValue(),
 				new java.sql.Date(record.dateProperty().getValue().getTime()),
@@ -351,7 +353,8 @@ public  class TradeLogTableStageController implements Initializable{
 				record.purchaseNumProperty().intValue(),
 				record.sellingPriceProperty().intValue(),
 				record.sellingNumProperty().intValue(),
-				record.PLProperty().intValue());
+				record.PLProperty().intValue(),
+				record.memoProperty().getValue());
 		@SuppressWarnings("unused")
 		H2DBConnector mySQLConnector = new H2DBConnector(sqlUpdateTradeLog);		
 	}
