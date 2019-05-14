@@ -1,0 +1,2 @@
+取引記録を月ごとに表示できるようにする。
+AddBookInfoStageとBookInfoTableStageを統合する

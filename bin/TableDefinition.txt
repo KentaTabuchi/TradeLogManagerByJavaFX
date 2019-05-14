@@ -1,0 +1,6 @@
+Table definition
+
+TRADE_LOG {
+	ID
+	PL Integer
+}
